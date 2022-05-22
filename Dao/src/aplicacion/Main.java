@@ -2,10 +2,16 @@
 package aplicacion;
 
 import accesodatos.*;
+import domain.*;
+import negocio.*;
 import java.util.*;
 
 
 public class Main {
+    
+    private static List<Integer> ordenesNumeros = new ArrayList();
+    
+    
     public static void main(String[] args) {
 
         Scanner lect = new Scanner(System.in);
@@ -141,9 +147,15 @@ public class Main {
     
     
     
-    //Para polimorfisar pero hasta despues.
     public static void insertar(ICrud datos){
-        datos.listar();
+                
+        if(datos instanceof  SalesOrderDetailImp){
+            LogicaOrderDetail logicaOrderD = new LogicaOrderDetail();
+            ordenesNumeros.add(logicaOrderD.procesamientoInsercion());
+	} 
+//        else if(datos instanceof  SalesOrderHeaderImp){
+//            LogicaOrderHeader logicaOrderH = new LogicaOrderHeader();
+//	} 
     }
     
     public static void recuperar(ICrud datos){
@@ -168,10 +180,10 @@ public class Main {
     }
     
     public static void actualizar(ICrud datos){
-        datos.listar();
+        datos.listar(); //Ya no fue solicitado.
     }
     
     public static void eliminar(ICrud datos){
-        datos.listar();
+        datos.listar(); //Ya no fue solicitado.
     }  
 }

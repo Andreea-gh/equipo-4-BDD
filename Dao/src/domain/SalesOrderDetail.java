@@ -18,11 +18,26 @@ public class SalesOrderDetail {
     public SalesOrderDetail() {
     }
 
-    public SalesOrderDetail(int salesOrderID, int orderQty, int productID) { //constructor insertor
+    public SalesOrderDetail(int salesOrderID, int productID, int orderQty) { //constructor buscador
         this.salesOrderID = salesOrderID;
         this.orderQty = orderQty;
         this.productID = productID;
     }
+
+    //Constructor insertor
+    public SalesOrderDetail(int salesOrderID, int orderQty, int productID, int specialOfferID, double unitPrice, double unitPriceDiscount, double lineTotal, String rowguid, String modifiedDate) {
+        this.salesOrderID = salesOrderID;
+        this.orderQty = orderQty;
+        this.productID = productID;
+        this.specialOfferID = specialOfferID;
+        this.unitPrice = unitPrice;
+        this.unitPriceDiscount = unitPriceDiscount;
+        this.lineTotal = lineTotal;
+        this.rowguid = rowguid;
+        this.modifiedDate = modifiedDate;
+    }
+    
+    
     
     public int getSalesOrderID() {
         return salesOrderID;

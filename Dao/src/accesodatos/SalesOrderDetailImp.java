@@ -22,18 +22,26 @@ public class SalesOrderDetailImp implements ICrud4{
         SalesOrderDetail order = (SalesOrderDetail)objeto;
         try {
             Conexion con = new Conexion();
-            ps = con.Conectar().prepareStatement("{call sp_InsertarSalesOrderDetail(?,?,?)}");
+            ps = con.Conectar().prepareStatement("INSERT INTO SERVIDOR2.SALES.[Sales].[SalesOrderDetail] (SalesOrderID, [OrderQty], [ProductID],\n" +
+                                                    "[SpecialOfferID], [UnitPrice], UnitPriceDiscount, [LineTotal], rowguid, ModifiedDate)\n" +
+                                                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) ");
                 
             ps.setInt(1, order.getSalesOrderID());
-            ps.setInt(2, order.getProductID());
-            ps.setInt(3, order.getOrderQty());
+            ps.setInt(2, order.getOrderQty());
+            ps.setInt(3, order.getProductID());
+            ps.setInt(4, order.getSpecialOfferID());
+            ps.setDouble(5, order.getUnitPrice());
+            ps.setDouble(6, order.getUnitPriceDiscount());
+            ps.setDouble(7, order.getLineTotal());
+            ps.setString(8, order.getRowguid());
+            ps.setString(9, order.getModifiedDate());
             
-            rs = ps.executeQuery();
+            ps.executeUpdate();
         } catch (SQLException ex) {
             System.out.println(ex);
         }
         finally{
-            Conexion.close(rs);
+//            Conexion.close(rs);
             Conexion.close(ps);
         }
         
@@ -106,7 +114,7 @@ public class SalesOrderDetailImp implements ICrud4{
             
             rs.next();
             resultado = rs.getInt(1);
-            System.out.println("resultado = " + resultado);     
+//            System.out.println("resultado = " + resultado);     
         } catch (SQLException ex) {
             System.out.println(ex);
         }
@@ -136,5 +144,42 @@ public class SalesOrderDetailImp implements ICrud4{
             Conexion.close(rs);
             Conexion.close(ps);
         }
+    }
+    
+    
+    public SalesOrderDetail buscar(SalesOrderDetail salesOrderD){
+        
+        SalesOrderDetail salesOrderDnuevo = new SalesOrderDetail();
+        try {
+            Conexion con = new Conexion();
+            ps = con.Conectar().prepareStatement("{call sp_BuscaSalesOrderDetail(?,?,?)}");
+                
+            ps.setInt(1, salesOrderD.getSalesOrderID());
+            ps.setInt(2, salesOrderD.getProductID());
+            ps.setInt(3, salesOrderD.getOrderQty());
+            
+            rs = ps.executeQuery();
+            
+            rs.next();
+            salesOrderDnuevo.setSalesOrderID(rs.getInt(1));
+            salesOrderDnuevo.setOrderQty(rs.getInt(2));
+            salesOrderDnuevo.setProductID(rs.getInt(3));
+            salesOrderDnuevo.setSpecialOfferID(rs.getInt(4));
+            salesOrderDnuevo.setUnitPrice(rs.getDouble(5));
+            salesOrderDnuevo.setUnitPriceDiscount(rs.getDouble(6));
+            salesOrderDnuevo.setLineTotal(rs.getDouble(7));
+            salesOrderDnuevo.setRowguid(rs.getString(8));
+            salesOrderDnuevo.setModifiedDate(rs.getString(9));
+            
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
+        finally{
+            Conexion.close(rs);
+            Conexion.close(ps);
+        }
+        
+        return salesOrderDnuevo;
+        
     }
 }

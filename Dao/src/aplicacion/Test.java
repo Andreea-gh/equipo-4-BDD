@@ -15,30 +15,7 @@ public class Test {
         
 //        ICrud datos; //Pa todos, pa todo.
 //        
-//        
-//        //CUSTOMER ------------------------------------------------
-//        
-//        //LISTAR
-//        datos = new CustomerImp();
-//
-//        imprimir(datos);
-        
-        
-        //UPDATE
-//         datos = new ImplementacionSqlServerCustomer();
-//        
-//        SalesCustomer salCust = new SalesCustomer();
-//        
-//        System.out.print("Actualizar. \nIngresa el id: ");
-//        Scanner lect = new Scanner(System.in);
-//        int id=Integer.parseInt(lect.nextLine());
-//        System.out.print("Ingresa el PersonID: ");
-//        int personId=Integer.parseInt(lect.nextLine());
-//        
-//        salCust.setCustomerID(id);
-//        salCust.setPersonID(personId);
-//        
-//        datos.actualizar(salCust);
+
         
 
         //ORDERDETAIL ------------------------------------------------
@@ -57,22 +34,6 @@ public class Test {
     //Para polimorfisar pero hasta despues.
     public static void insertar(ICrud datos){
         datos.listar();
-    }
-    
-    public static void imprimir(ICrud datos){
-        List lista=null; //pa todos.
-        
-        if(datos instanceof  SalesOrderDetailImp){
-            lista=((SalesOrderDetailImp)datos).listar();
-            
-	} 
-	else if(datos instanceof  CustomerImp){
-            lista=((CustomerImp)datos).listar();
-	} 
-        
-        lista.forEach(elemento->{
-            System.out.println(" "+elemento);
-        });
     }
     
     public static void actualizar(ICrud datos){
