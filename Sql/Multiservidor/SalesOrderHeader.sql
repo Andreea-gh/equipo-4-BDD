@@ -23,7 +23,7 @@ exec sp_RecuperarSalesOrderHeader
 
 -- [SalesOrderID]: Es el numero de orden de una venta en salesOrderDetail.
 -- [RevisionNumber]: Se trae de la tabla PurcharseOrderHeader, pero hay que pasar primero por 
-	-- ShipMethod.
+	-- Purcharsing.ShipMethod.
 -- [OrderDate]: Se trae de la tabla PurcharseOrderHeader, pero hay que pasar primero por 
 	-- ShipMethod.
 -- [DueDate]: Se trae de la tabla PurcharseOrderDetail, pero hay que pasar primero por 
@@ -42,8 +42,20 @@ exec sp_RecuperarSalesOrderHeader
 -- [BillToAddressID]: Ingresar uno aleatorio.
 --[ShipToAddressID]: El mismo que el de arriba.
 --[ShipMethodID]: Se trae de la tabla shipMethod.
---[CreditCardID]: Se trae de la tabla credtCard, pero hay que pasar por customer, person, 
-	--credit person y credit card.
+--[CreditCardID]: Se trae de la tabla Sales.credtCard, pero hay que pasar por Sales.customer, 
+	--Person.person, sales.PersonCreditCard y sales.creditcard.
+
+	@CreditCardID int
+	set @CreditCardID = ( select *
+						  from SERVIDOR2.sales.sales.creditcard )
+						  select *
+						  from SERVIDOR2.sales.sales.PersonCreditCard
+
+						  select *
+						  from Person.Person
+
+						  select *
+						  from SERVIDOR2.sales.sales.customer
 --[CreditCardApprovalCode]:
 --[CurrencyRateID]: Dejarlo nulo.
 --[SubTotal]: Es la suma de todos los line total de una orden. 
@@ -62,7 +74,7 @@ select *
 from [Purchasing].[ShipMethod]
 
 select *
-from SERVIDOR2.SALES.[Sales].[SalesOrderDetail]
+from SERVIDOR2.SALES.[Sales].[SalesOrderHeaderSalesReason]
 where SalesOrderID = 48092
 
 
@@ -86,9 +98,40 @@ where CreditCardID = 12922 -- 16162
 
 
 
+create or alter procedure sp_BuscarSalesOrderHeader
+	@salesOrderID int, @bandera int, @customerId int, @BillToAddressID int
+as begin 
+	BEGIN TRY
+		BEGIN TRANSACTION
+			declare @revision int, @numeroOrden varchar(40), @TerritoryID int,
+					@ShipToAddressID int
 
-UPDATE OPENQUERY(MYSQL,'SELECT SafetyStockLevel FROM AdventureWorks2019.product WHERE ProductID = 1') SET SafetyStockLevel = 5
+			set @revision = ( select *
+							from [Purchasing].[PurchaseOrderHeader]
+							where ShipMethodID = ( select *
+												from purchasing.shipMethod ))
 
-update AdventureWorks2019.product
-set SafetyStockLevel = 20
-where ProductID=1
+			set @numeroOrden = concat('SO', @salesOrderID)
+
+			set @TerritoryID = ( select TerritoryID 
+								from SERVIDOR2.SALES.sales.Customer
+								where CustomerID = @customerId )
+
+			set @ShipToAddressID = @BillToAddressID
+			
+			
+			
+			
+		COMMIT TRANSACTION
+	END TRY 
+	BEGIN CATCH   
+		ROLLBACK TRANSACTION   
+		RAISERROR ('No se pudo realizar la accion',16,1)  
+	END CATCH
+end
+
+select concat('CONCAT',5000)
+
+DECLARE @vicio varchar(1000)
+set @vicio = concat('CONCAT',5000)
+print @vicio

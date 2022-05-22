@@ -3,39 +3,45 @@
   <Items>
     <LogicalFolder Name="Conexiones" Type="2" Sorted="true">
       <Items>
-        <ConnectionNode Name="192.168.0.5\MSSQL3:sa">
-          <Created>2022-05-15T12:34:15.8582448-05:00</Created>
+        <ConnectionNode Name="192.168.0.3\MSSQL3:sa">
+          <Created>2022-05-21T21:17:37.0774598-05:00</Created>
           <Type>SQL</Type>
-          <Server>192.168.0.5\MSSQL3</Server>
+          <Server>192.168.0.3\MSSQL3</Server>
           <UserName>sa</UserName>
           <Authentication>SQL</Authentication>
           <InitialDB />
           <LoginTimeout>30</LoginTimeout>
           <ExecutionTimeout>0</ExecutionTimeout>
           <ConnectionProtocol>NotSpecified</ConnectionProtocol>
-          <ApplicationName />
+          <ApplicationName>Microsoft SQL Server Management Studio - Consulta</ApplicationName>
         </ConnectionNode>
       </Items>
     </LogicalFolder>
     <LogicalFolder Name="Consultas" Type="0" Sorted="true">
       <Items>
         <FileNode Name="Customer.sql">
-          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:192.168.0.5\MSSQL3:False:sa</AssociatedConnectionMoniker>
-          <AssociatedConnSrvName>192.168.0.5\MSSQL3</AssociatedConnSrvName>
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:192.168.0.3\MSSQL3:False:sa</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>192.168.0.3\MSSQL3</AssociatedConnSrvName>
           <AssociatedConnUserName>sa</AssociatedConnUserName>
           <FullPath>Customer.sql</FullPath>
         </FileNode>
         <FileNode Name="SalesOrderDetail.sql">
-          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:192.168.0.5\MSSQL3:False:sa</AssociatedConnectionMoniker>
-          <AssociatedConnSrvName>192.168.0.5\MSSQL3</AssociatedConnSrvName>
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:192.168.0.3\MSSQL3:False:sa</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>192.168.0.3\MSSQL3</AssociatedConnSrvName>
           <AssociatedConnUserName>sa</AssociatedConnUserName>
           <FullPath>SalesOrderDetail.sql</FullPath>
         </FileNode>
         <FileNode Name="SalesOrderHeader.sql">
-          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:192.168.0.5\MSSQL3:False:sa</AssociatedConnectionMoniker>
-          <AssociatedConnSrvName>192.168.0.5\MSSQL3</AssociatedConnSrvName>
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:192.168.0.3\MSSQL3:False:sa</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>192.168.0.3\MSSQL3</AssociatedConnSrvName>
           <AssociatedConnUserName>sa</AssociatedConnUserName>
           <FullPath>SalesOrderHeader.sql</FullPath>
+        </FileNode>
+        <FileNode Name="SpecialOfferProduct.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:192.168.0.3\MSSQL3:False:sa</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>192.168.0.3\MSSQL3</AssociatedConnSrvName>
+          <AssociatedConnUserName>sa</AssociatedConnUserName>
+          <FullPath>SpecialOfferProduct.sql</FullPath>
         </FileNode>
       </Items>
     </LogicalFolder>

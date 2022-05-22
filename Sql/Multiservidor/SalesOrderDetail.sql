@@ -2,7 +2,7 @@ use AdventureWorks2019
 go
 
 -- RECUPERAR
-create or alter procedure sp_RecuperarOrderDetail
+create or alter procedure sp_RecuperarSalesOrderDetail
 as begin 
 	
 	BEGIN TRY
@@ -17,9 +17,10 @@ as begin
 	END CATCH
 
 end
+go
 
-exec sp_RecuperarOrderDetail
-
+exec sp_RecuperarSalesOrderDetail
+go
 
 -- INSERTAR
 

@@ -17,13 +17,15 @@ as begin
 	END CATCH
 
 end
+go
 
 exec sp_RecuperarCustomer
-
+go
 
 
 -- ACTUALIZAR
-
+-- Aun no se sabe si se utilizara y de ser el caso, no se sabe con certeza
+-- si esta correcto asi como esta.
 create or alter procedure sp_ActualizarCustomer
 	@CustomerID int, @PersonID int
 as begin 
@@ -45,5 +47,6 @@ as begin
 	END CATCH
 
 end
+go
 
 exec sp_ActualizarCustomer 1,15 
