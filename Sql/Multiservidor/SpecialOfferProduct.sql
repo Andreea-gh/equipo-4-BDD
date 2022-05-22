@@ -21,3 +21,6 @@ go
 
 exec sp_RecuperarSpecialOfferProduct
 go
+
+-- ACTUALIZAR
+-- Falata este pero ya no se solicito

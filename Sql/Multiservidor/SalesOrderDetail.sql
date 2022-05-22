@@ -61,7 +61,7 @@ SELECT  @NAME = CONVERT(varchar(100),@aux)
 SELECT  @TSQL = 'select * from openquery(MYSQL,''select * from AdventureWorks2019.product
 				WHERE ProductID = ''''' + @NAME + ''''''')'
 EXEC (@TSQL)
-
+go
 
 -- Actualizar el stock
 create or alter procedure sp_ActualizarProducto
@@ -85,36 +85,42 @@ end
 go
 
 exec sp_ActualizarProducto 1,10
-
+go
 
 -- Validar existencia, cantidad stock.
--- Tambien aqui mismo deberia validarse si tiene o no algun tipo de oferta (?)
+-- Tambien aqui mismo deberia validarse si tiene o no algun tipo de oferta (?).
+-- Por alguna extraña razon los openquery en la app no jalan, pero aqui en sql server si. NO BORRAR.
 create or alter procedure sp_ValidarInserccionSalesOrderDetail
 	@ProductID int, @solicitud_stock int
 as begin 
 	BEGIN TRY
 		BEGIN TRANSACTION
 		
-			create table #tablaExistencia( existencia int )
+			--create table #tablaExistencia( existencia int )
 
-			DECLARE @TSQL varchar(8000), @productNo VARCHAR(100)
-			SELECT  @productNo = CONVERT(varchar(100), @ProductID)
-			SELECT  @TSQL = 'select * from openquery(MYSQL,''select ProductID from AdventureWorks2019.product
-							WHERE ProductID = ''''' + @productNo + ''''''')'
+			--DECLARE @TSQL varchar(8000), @productNo VARCHAR(100)
+			--SELECT  @productNo = CONVERT(varchar(100), @ProductID)
+			--SELECT  @TSQL = 'select * from openquery(MYSQL,''select ProductID from AdventureWorks2019.product
+			--				WHERE ProductID = ''''' + @productNo + ''''''')'
 			
-			insert into #tablaExistencia exec(@tsql)
+			--insert into #tablaExistencia exec(@tsql)
 
-			IF EXISTS ( select * from #tablaExistencia )
+			--IF EXISTS ( select * from #tablaExistencia )
+			IF EXISTS ( select ProductID from production.Product
+							WHERE ProductID = @ProductID )
 			BEGIN
-				create table #tablaCantidad( cant int )
+				--create table #tablaCantidad( cant int )
 
+				--Declare @nuevo_stock int
+				--SELECT  @productNo = CONVERT(varchar(100), @ProductID)
+				--SELECT  @TSQL = 'select * from openquery(MYSQL,''select SafetyStockLevel from AdventureWorks2019.product
+				--				WHERE ProductID = ''''' + @productNo + ''''''')'
+				--insert into #tablaCantidad exec(@tsql)
+
+				--set @nuevo_stock = ( select * from #tablaCantidad ) - @solicitud_stock
 				Declare @nuevo_stock int
-				SELECT  @productNo = CONVERT(varchar(100), @ProductID)
-				SELECT  @TSQL = 'select * from openquery(MYSQL,''select SafetyStockLevel from AdventureWorks2019.product
-								WHERE ProductID = ''''' + @productNo + ''''''')'
-				insert into #tablaCantidad exec(@tsql)
-
-				set @nuevo_stock = ( select * from #tablaCantidad ) - @solicitud_stock
+				set @nuevo_stock = ( select SafetyStockLevel from production.product
+								WHERE ProductID =  @ProductID  ) - @solicitud_stock
 
 				IF @nuevo_stock >= 0
 				BEGIN
@@ -124,13 +130,13 @@ as begin
 				END
 				ELSE
 				BEGIN
-					PRINT N'No hay la cantidad de stock del producto que solicita';
+					--PRINT N'No hay la cantidad de stock del producto que solicita';
 					select -1
 				END
 			END
 			ELSE 
 			BEGIN
-				PRINT N'No existe el producto que solicita';
+				--PRINT N'No existe el producto que solicita';
 				select 0
 			END
 
@@ -143,29 +149,35 @@ as begin
 end
 go
 
-exec sp_ValidarInserccionSalesOrderDetail 1,11
+exec sp_ValidarInserccionSalesOrderDetail 1,9
+go
+
 
 
 -- Insertar 
 -- porque no jala la insercion remota si, si jala fuera de el sp. 
+-- Por alguna extraña razon los openquery en la app no jalan, pero aqui en sql server si. NO BORRAR.
 create or alter procedure sp_BuscaSalesOrderDetail
 	@SalesOrderID int, @ProductID int, @cantidad smallint
 as begin 
 	BEGIN TRY
 		BEGIN TRANSACTION
 
-			Declare @tipo_oferta int, @precio money, @descuento smallmoney, @total numeric(38,6)
-			create table #tablaPrecio( preci money )
+			--Declare @tipo_oferta int, @precio money, @descuento smallmoney, @total numeric(38,6)
+			--create table #tablaPrecio( preci money )
 
-			DECLARE @TSQL varchar(8000), @productNo VARCHAR(100)
-			SELECT  @productNo = CONVERT(varchar(100), @ProductID)
-			SELECT  @TSQL = 'select * from openquery(MYSQL,''select ListPrice from AdventureWorks2019.product
-							WHERE ProductID = ''''' + @productNo + ''''''')'
+			--DECLARE @TSQL varchar(8000), @productNo VARCHAR(100)
+			--SELECT  @productNo = CONVERT(varchar(100), @ProductID)
+			--SELECT  @TSQL = 'select * from openquery(MYSQL,''select ListPrice from AdventureWorks2019.product
+			--				WHERE ProductID = ''''' + @productNo + ''''''')'
 			
-			insert into #tablaPrecio exec(@tsql)
+			--insert into #tablaPrecio exec(@tsql)
 
-			set @precio = ( select * from #tablaPrecio )
+			--set @precio = ( select * from #tablaPrecio )
 
+			Declare @tipo_oferta int, @precio money, @descuento smallmoney, @total numeric(38,6)
+			set @precio = ( select ListPrice from Production.Product
+							where ProductID = @ProductID )
 					
 			IF EXISTS (select * from  SERVIDOR2.SALES.[Sales].[SpecialOfferProduct] where ProductID = @ProductID )
 					BEGIN
@@ -210,9 +222,20 @@ as begin
 end
 go
 
-exec sp_BuscaSalesOrderDetail 1811, 517, 2
+exec sp_BuscaSalesOrderDetail 1920, 517, 10
 
 -- insercion manual
 INSERT INTO SERVIDOR2.SALES.[Sales].[SalesOrderDetail] (SalesOrderID, [OrderQty], [ProductID],
 						[SpecialOfferID], [UnitPrice], UnitPriceDiscount, [LineTotal], rowguid, ModifiedDate)
 VALUES (1811, 1, 797, 1, 45, 0.00, 45, NEWID(), getdate());	
+
+
+select *
+from SERVIDOR2.SALES.[Sales].[SalesOrderDetail]
+where SalesOrderID = 1740
+-- ACTUALIZAR
+-- Falata este pero ya no se solicito
+
+
+-- ELIMINACION
+
