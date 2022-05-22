@@ -2,7 +2,7 @@
 package negocio;
 
 import accesodatos.SalesOrderDetailImp;
-import domain.OrderDetail;
+import domain.SalesOrderDetail;
 import java.util.*;
 
 
@@ -59,9 +59,9 @@ public class LogicaOrderDetail {
 //            opcion = Integer.parseInt(opcionS);
 //        }while(opcion == 1);
 //        
-        List<OrderDetail> ordenes = new ArrayList();
-        OrderDetail order = new OrderDetail(1811, 10, 1);
-        OrderDetail order2 = new OrderDetail(1811, 10, 2);
+        List<SalesOrderDetail> ordenes = new ArrayList();
+        SalesOrderDetail order = new SalesOrderDetail(1811, 10, 1);
+        SalesOrderDetail order2 = new SalesOrderDetail(1811, 10, 2);
         ordenes.add(order);
          ordenes.add(order2);
         

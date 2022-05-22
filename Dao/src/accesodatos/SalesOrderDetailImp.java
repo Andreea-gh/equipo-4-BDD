@@ -2,7 +2,7 @@
 package accesodatos;
 
 import conexion.Conexion;
-import domain.OrderDetail;
+import domain.SalesOrderDetail;
 import java.sql.*;
 import java.util.*;
 
@@ -19,7 +19,7 @@ public class SalesOrderDetailImp implements ICrud4{
         
         int rows = 0;
         
-        OrderDetail order = (OrderDetail)objeto;
+        SalesOrderDetail order = (SalesOrderDetail)objeto;
         try {
             Conexion con = new Conexion();
             ps = con.Conectar().prepareStatement("{call sp_InsertarSalesOrderDetail(?,?,?)}");
@@ -46,11 +46,11 @@ public class SalesOrderDetailImp implements ICrud4{
     }
 
     @Override
-    public List<OrderDetail> listar() {
+    public List<SalesOrderDetail> listar() {
         
         System.out.println("Listar desde SqlServer");
-        List<OrderDetail> lista = null;
-        OrderDetail orderDet = null;
+        List<SalesOrderDetail> lista = null;
+        SalesOrderDetail orderDet = null;
 
         try {
             Conexion con = new Conexion();
@@ -59,7 +59,7 @@ public class SalesOrderDetailImp implements ICrud4{
             rs = ps.executeQuery();
             lista = new ArrayList();
             while (rs.next()) {
-                orderDet = new OrderDetail();
+                orderDet = new SalesOrderDetail();
                 
                 orderDet.setSalesOrderID(rs.getInt(1));
                 orderDet.setSalesOrderDetailID(rs.getInt(2));
@@ -92,7 +92,7 @@ public class SalesOrderDetailImp implements ICrud4{
     }
     
     
-    public int validar(OrderDetail order){
+    public int validar(SalesOrderDetail order){
         
         int resultado = -2;
         try {
@@ -119,7 +119,7 @@ public class SalesOrderDetailImp implements ICrud4{
     }
     
     
-    public void actualizarProducto(int productId,int nuevoStock) {
+    public void actualizarProducto(int productId, int nuevoStock) {
         
         try {
             Conexion con = new Conexion();

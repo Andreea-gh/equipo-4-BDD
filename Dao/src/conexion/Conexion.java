@@ -7,7 +7,7 @@ public class Conexion {
 
     Connection con = null;
 //    String url="jdbc:sqlserver://192.168.0.4\\MSSQL3;database=AdventureWorks2019;integratedSecurity=true";
-    String url="jdbc:sqlserver://192.168.0.4\\MSSQL3;database=AdventureWorks2019;user=sa;password=123456";
+    String url="jdbc:sqlserver://192.168.0.3\\MSSQL3;database=AdventureWorks2019;user=sa;password=123456";
     
     public Conexion() 
     {
