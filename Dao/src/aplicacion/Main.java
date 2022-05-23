@@ -2,7 +2,6 @@
 package aplicacion;
 
 import accesodatos.*;
-import domain.*;
 import negocio.*;
 import java.util.*;
 
@@ -10,7 +9,6 @@ import java.util.*;
 public class Main {
     
     private static List<Integer> ordenesNumeros = new ArrayList();
-    
     
     public static void main(String[] args) {
 
@@ -153,9 +151,10 @@ public class Main {
             LogicaOrderDetail logicaOrderD = new LogicaOrderDetail();
             ordenesNumeros.add(logicaOrderD.procesamientoInsercion());
 	} 
-//        else if(datos instanceof  SalesOrderHeaderImp){
-//            LogicaOrderHeader logicaOrderH = new LogicaOrderHeader();
-//	} 
+        else if(datos instanceof  SalesOrderHeaderImp){
+            LogicaOrderHeader logicaOrderH = new LogicaOrderHeader();
+            logicaOrderH.procesamientoInsercion(ordenesNumeros);
+	} 
     }
     
     public static void recuperar(ICrud datos){

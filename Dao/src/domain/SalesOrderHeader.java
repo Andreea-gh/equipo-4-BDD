@@ -36,6 +36,21 @@ public class SalesOrderHeader {
         return "SalesOrderHeader{" + "salesOrderId=" + salesOrderId + ", revisionNumber=" + revisionNumber + ", orderDate=" + orderDate + ", duedate=" + duedate + ", shipDate=" + shipDate + ", status=" + status + ", onlineOrderFlag=" + onlineOrderFlag + ", salesOrderNumber=" + salesOrderNumber + ", purchaseOrderNumber=" + purchaseOrderNumber + ", accountNumber=" + accountNumber + ", customerId=" + customerId + ", salesPersionId=" + salesPersionId + ", territoryId=" + territoryId + ", billToAdressId=" + billToAdressId + ", shipToAdressId=" + shipToAdressId + ", shipMethodId=" + shipMethodId + ", creditCardId=" + creditCardId + ", creditCardAppovalCode=" + creditCardAppovalCode + ", currencyRateId=" + currencyRateId + ", subTotal=" + subTotal + ", taxAmt=" + taxAmt + ", freight=" + freight + ", totalDue=" + totalDue + ", comment=" + comment + ", rowguid=" + rowguid + ", modifiedDate=" + modifiedDate + '}';
     }
 
+    public SalesOrderHeader() {
+    }
+
+    //Constructor buscador
+    public SalesOrderHeader(int salesOrderId, int onlineOrderFlag, int customerId, int billToAdressId, double taxAmt, double freight) {
+        this.salesOrderId = salesOrderId;
+        this.onlineOrderFlag = onlineOrderFlag;
+        this.customerId = customerId;
+        this.billToAdressId = billToAdressId;
+        this.taxAmt = taxAmt;
+        this.freight = freight;
+    }
+
+    
+    
     
     public int getSalesOrderId() {
         return salesOrderId;

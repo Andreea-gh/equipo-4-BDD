@@ -1,11 +1,10 @@
 
 package aplicacion;
 
-import accesodatos.CustomerImp;
-import accesodatos.ICrud;
-import accesodatos.SalesOrderDetailImp;
-import java.util.List;
-import negocio.LogicaOrderDetail;
+
+import domain.*;
+import java.util.*;
+import negocio.*;
 
 /*Clase para unicamente hacer pruebas*/
 
@@ -13,34 +12,16 @@ import negocio.LogicaOrderDetail;
 public class Test {
     public static void main(String[] args) {
         
-//        ICrud datos; //Pa todos, pa todo.
+//
+//        LogicaOrderHeader ordenes = new LogicaOrderHeader();
+//        List<Integer> lista = new ArrayList();
 //        
-
-        
-
-        //ORDERDETAIL ------------------------------------------------
-        
-        //LISTAR
-//        datos = new OrderDetailImp();
-//        
-//        imprimir(datos);
-
-        LogicaOrderDetail ordenes = new LogicaOrderDetail();
-        
-        ordenes.procesamientoInsercion();
+//        lista.add(121320);
+//        lista.add(134050);
+//
+//        ordenes.procesamientoInsercion(lista);
         
     }
     
-    //Para polimorfisar pero hasta despues.
-    public static void insertar(ICrud datos){
-        datos.listar();
-    }
     
-    public static void actualizar(ICrud datos){
-        datos.listar();
-    }
-    
-    public static void eliminar(ICrud datos){
-        datos.listar();
-    }  
 }

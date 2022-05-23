@@ -74,7 +74,47 @@ public class SalesOrderHeaderImp implements IAccesoDatosOrderHeader {
 
     @Override
     public int insertar(SalesOrderHeader objeto) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        int rows = 0;
+        SalesOrderHeader order = (SalesOrderHeader)objeto;
+        try {
+            Conexion con = new Conexion();
+            ps = con.Conectar().prepareStatement("INSERT INTO SERVIDOR2.SALES.sales.salesOrderHeader\n" +
+                                                    " (RevisionNumber, OrderDate, DueDate, ShipDate, [Status],\n" +
+                                                    "  OnlineOrderFlag, SalesOrderNumber, CustomerID, TerritoryID, \n" +
+                                                    "  BillToAddressID, ShipToAddressID, ShipMethodID, CreditCardID, \n" +
+                                                    "  SubTotal, TaxAmt, Freight, TotalDue, rowguid, ModifiedDate) \n" +
+                                                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ");
+                
+            ps.setInt(1, order.getRevisionNumber());
+            ps.setString(2, order.getOderDate());
+            ps.setString(3, order.getDuedate());
+            ps.setString(4, order.getShipDate());
+            ps.setDouble(5, order.getStatus());
+            ps.setDouble(6, order.getOnlineOrderFlag());
+            ps.setString(7, order.getSalesOrderNumber());
+            ps.setInt(8, order.getCustomerId());
+            ps.setInt(9, order.getTerritoryId());
+            ps.setInt(10, order.getBillToAdressId());
+            ps.setInt(11, order.getShipToAdressId());
+            ps.setInt(12, order.getShipMethodId());
+            ps.setInt(13, order.getCreditCardId());
+            ps.setDouble(14, order.getSubTotal());
+            ps.setDouble(15, order.getTaxAmt());
+            ps.setDouble(16, order.getFreight());
+            ps.setDouble(17, order.getTotalDue());
+            ps.setString(18, order.getRowguid());
+            ps.setString(19, order.getModifiedDate());
+            
+            ps.executeUpdate();
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
+        finally{
+            Conexion.close(ps);
+        }
+        
+        return rows;
     }
 
     @Override
@@ -85,6 +125,55 @@ public class SalesOrderHeaderImp implements IAccesoDatosOrderHeader {
     @Override
     public void actualizar(Object objeto) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    public SalesOrderHeader buscar(SalesOrderHeader salesOrderH){
+        
+        SalesOrderHeader salesOrderHnuevo = new SalesOrderHeader();
+        try {
+            Conexion con = new Conexion();
+            ps = con.Conectar().prepareStatement("{call sp_BuscarSalesOrderHeader(?,?,?,?,?,?)}");
+                
+            ps.setInt(1, salesOrderH.getSalesOrderId());
+            ps.setInt(2, salesOrderH.getOnlineOrderFlag());
+            ps.setInt(3, salesOrderH.getCustomerId());
+            ps.setInt(4, salesOrderH.getBillToAdressId());
+            ps.setDouble(5, salesOrderH.getTaxAmt());
+            ps.setDouble(6, salesOrderH.getFreight());
+            
+            rs = ps.executeQuery();
+            
+            rs.next();
+            salesOrderHnuevo.setRevisionNumber(rs.getInt(1));
+            salesOrderHnuevo.setOrderDate(rs.getString(2));
+            salesOrderHnuevo.setDuedate(rs.getString(3));
+            salesOrderHnuevo.setShipDate(rs.getString(4));
+            salesOrderHnuevo.setStatus(rs.getInt(5));
+            salesOrderHnuevo.setOnlineOrderFlag(rs.getInt(6));
+            salesOrderHnuevo.setSalesOrderNumber(rs.getString(7));
+            salesOrderHnuevo.setCustomerId(rs.getInt(8));
+            salesOrderHnuevo.setTerritoryId(rs.getInt(9));
+            salesOrderHnuevo.setBillToAdressId(rs.getInt(10));
+            salesOrderHnuevo.setShipToAdressId(rs.getInt(11));
+            salesOrderHnuevo.setShipMethodId(rs.getInt(12));
+            salesOrderHnuevo.setCreditCardId(rs.getInt(13));
+            salesOrderHnuevo.setSubTotal(rs.getDouble(14));
+            salesOrderHnuevo.setTaxAmt(rs.getDouble(15));
+            salesOrderHnuevo.setFreight(rs.getDouble(16));
+            salesOrderHnuevo.setTotalDue(rs.getDouble(17));
+            salesOrderHnuevo.setRowguid(rs.getString(18));
+            salesOrderHnuevo.setModifiedDate(rs.getString(19));
+            
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
+        finally{
+            Conexion.close(rs);
+            Conexion.close(ps);
+        }
+        
+        return salesOrderHnuevo;
+        
     }
     
 }
