@@ -138,20 +138,27 @@ order by ENTIDAD_RES
 
 -- Solucion 2
 
+
 -- 7. Listar los 5 municipios con el mayor número de casos confirmados en niños menos de 13 años con alguna comorbilidad reportada y 
 	--cuantos de esos casos fallecieron.
 
 -- Solucion 1
 
-Select MUNICIPIO_RES, count(case CLASIFICACION_FINAL when 1 then CLASIFICACION_FINAL 
+Select top 5 MUNICIPIO_RES, count(case CLASIFICACION_FINAL when 1 then CLASIFICACION_FINAL 
                                                      when 2 then CLASIFICACION_FINAL
 						      						 when 3 then CLASIFICACION_FINAL
                                           end) as confirmado, 
 					  COUNT( case when  FECHA_DEF != '9999-99-99' then FECHA_DEF end ) as total_Defunciones  
 from dbo.datoscovid
-where EDAD < 13 and -- Falta la condicion para comorbilidad
+where EDAD < 13  and ID_REGISTRO in ( select ID_REGISTRO
+									  from dbo.datoscovid
+									  where EDAD < 13 and ( (NEUMONIA = 1 and DIABETES = 1) or (NEUMONIA = 1 and ASMA = 1) 
+														or (NEUMONIA = 1 and HIPERTENSION = 1) or (DIABETES = 1 and ASMA = 1) 
+														or (DIABETES = 1 and HIPERTENSION = 1) or (ASMA = 1 and HIPERTENSION = 1)) )
 group by MUNICIPIO_RES
 order by confirmado desc
+
+
 
 -- Solucion 2
 
@@ -211,7 +218,46 @@ where FECHA_INGRESO like '2021-%'
 
 
 -- 10. Determinar en que rango de edad: menor de edad, 19 a 40, 40 a 60 o mayor de 60 hay mas casos reportados que se hayan recuperado. 
+-- Nota: Se desprecia la edad 18 y se toma en cuenta dos veces la edad de 40, porque asi lo indica la consulta.
 
-select [menor de edad] as Rango_Edad, 
+-- Solucion 1
+SELECT *
+from
+	( select 'menor de edad' as Rango_Edad, COUNT(*) as Recuperados
+	from dbo.datoscovid
+	where EDAD < 18 and FECHA_DEF = '9999-99-99'
+	UNION ALL
+	select '19 a 40' as Rango_Edad, COUNT(*) as Recuperados
+	from dbo.datoscovid
+	where EDAD between 19 and 40 and FECHA_DEF = '9999-99-99'
+	UNION ALL
+	select '40 a 60' as Rango_Edad, COUNT(*) as Recuperados
+	from dbo.datoscovid
+	where EDAD between 40 and 60 and FECHA_DEF = '9999-99-99'
+	UNION ALL
+	select 'mayor a 60' as Rango_Edad, COUNT(*) as Recuperados
+	from dbo.datoscovid
+	where EDAD > 60 and FECHA_DEF = '9999-99-99' ) as aux
+where aux.Recuperados = (  SELECT MAX(aux2.Recuperados)
+						from
+							( select 'menor de edad' as Rango_Edad, COUNT(*) as Recuperados
+							from dbo.datoscovid
+							where EDAD < 18 and FECHA_DEF = '9999-99-99'
+							UNION ALL
+							select '19 a 40' as Rango_Edad, COUNT(*) as Recuperados
+							from dbo.datoscovid
+							where EDAD between 19 and 40 and FECHA_DEF = '9999-99-99'
+							UNION ALL
+							select '40 a 60' as Rango_Edad, COUNT(*) as Recuperados
+							from dbo.datoscovid
+							where EDAD between 40 and 60 and FECHA_DEF = '9999-99-99'
+							UNION ALL
+							select 'mayor a 60' as Rango_Edad, COUNT(*) as Recuperados
+							from dbo.datoscovid
+							where EDAD > 60 and FECHA_DEF = '9999-99-99' ) as aux2 )
 
-select * from dbo.datoscovid
+-- Solucion 2
+
+
+
+
