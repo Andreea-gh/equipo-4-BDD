@@ -2,6 +2,8 @@ use AdventureWorks2019
 go
 
 -- RECUPERAR
+-- sp diseñado para consultar los registros que contiene la tabla SpecialOfferProduct el cual
+-- se encuentra en el otro servidor de sql server.
 create or alter procedure sp_RecuperarSpecialOfferProduct
 as begin 
 	
@@ -23,4 +25,4 @@ exec sp_RecuperarSpecialOfferProduct
 go
 
 -- ACTUALIZAR
--- Falata este pero ya no se solicito
+-- Falat este pero ya no se solicito

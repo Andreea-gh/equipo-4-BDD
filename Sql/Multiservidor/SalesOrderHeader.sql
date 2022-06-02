@@ -2,6 +2,8 @@ use AdventureWorks2019
 go
 
 -- RECUPERACION
+-- sp diseñado para consultar los registros que contiene la tabla SalesOrderHeader el cual
+-- se encuentra en el otro servidor de sql server.
 create or alter procedure sp_RecuperarSalesOrderHeader
 as begin 
 	BEGIN TRY
@@ -21,36 +23,40 @@ exec sp_RecuperarSalesOrderHeader
 go
 
 -- INSERTAR
+-- Los siguientes comentarios se hicieron para identificar o razonar en que consisten los contenidos 
+-- (registros) de cada columna.
 
--- [SalesOrderID]: Es el numero de orden de una venta en salesOrderDetail.
--- [RevisionNumber]: Se trae de la tabla PurcharseOrderHeader, pero hay que pasar primero por 
-	-- Purcharsing.ShipMethod.
--- [OrderDate]: Se trae de la tabla PurcharseOrderHeader, pero hay que pasar primero por 
-	-- ShipMethod.
--- [DueDate]: Se trae de la tabla PurcharseOrderDetail, pero hay que pasar primero por 
-	-- PurcharseOrderHeader y ShipMethod.
--- [ShipDate]: Se trae de la tabla PurcharseOrderHeader, pero hay que pasar primero por 
-	-- ShipMethod.
--- [Status]: Se trae de la tabla PurcharseOrderHeader, pero hay que pasar primero por 
-	-- ShipMethod. Aunque todos valen 5.
--- [OnlineOrderFlag]: Pedirla al usuario.
--- [SalesOrderNumber]: Es el mismo valor que SalesOrderId pero con el prefijo: SO.
--- [CustomerID]: Se solicita al usuario. Se busca en la tabla customer.
--- [TerritoryID]: Se busca en la tabla customer.
--- [BillToAddressID]: Ingresar uno aleatorio.
---[ShipToAddressID]: El mismo que el de arriba.
---[ShipMethodID]: Se trae de la tabla shipMethod. Pero la mayoria son 1.
---[CreditCardID]: Se trae de la tabla Sales.credtCard, pero hay que pasar por
-	--Person.person, sales.PersonCreditCard.				  
---[SubTotal]: Es la suma de todos los line total de una orden. 
---[TaxAmt]: Especie de impuesto, pero de donde se trae(???).Ponerlo aleatorio en el
-	--rango de 3 - 80000
---[Freight]: Especie de impuesto, pero de donde se trae(???).Ponerlo aleatorio en el
-	--rango de 1 - 20000
---[TotalDue]: Es el resultado de Subtotal + TaxAmt + Freight.
---[rowguid]: NEWID()
---[ModifiedDate]: GETDATE()
+	-- [SalesOrderID]: Es el numero de orden de una venta en salesOrderDetail.
+	-- [RevisionNumber]: Se trae de la tabla PurcharseOrderHeader, pero hay que pasar primero por 
+		-- Purcharsing.ShipMethod.
+	-- [OrderDate]: Se trae de la tabla PurcharseOrderHeader, pero hay que pasar primero por 
+		-- ShipMethod.
+	-- [DueDate]: Se trae de la tabla PurcharseOrderDetail, pero hay que pasar primero por 
+		-- PurcharseOrderHeader y ShipMethod.
+	-- [ShipDate]: Se trae de la tabla PurcharseOrderHeader, pero hay que pasar primero por 
+		-- ShipMethod.
+	-- [Status]: Se trae de la tabla PurcharseOrderHeader, pero hay que pasar primero por 
+		-- ShipMethod. Aunque todos valen 5.
+	-- [OnlineOrderFlag]: Pedirla al usuario.
+	-- [SalesOrderNumber]: Es el mismo valor que SalesOrderId pero con el prefijo: SO.
+	-- [CustomerID]: Se solicita al usuario. Se busca en la tabla customer.
+	-- [TerritoryID]: Se busca en la tabla customer.
+	-- [BillToAddressID]: Ingresar uno aleatorio.
+	--[ShipToAddressID]: El mismo que el de arriba.
+	--[ShipMethodID]: Se trae de la tabla shipMethod. Pero la mayoria son 1.
+	--[CreditCardID]: Se trae de la tabla Sales.credtCard, pero hay que pasar por
+		--Person.person, sales.PersonCreditCard.				  
+	--[SubTotal]: Es la suma de todos los line total de una orden. 
+	--[TaxAmt]: Especie de impuesto, pero de donde se trae(???).Ponerlo aleatorio en el
+		--rango de 3 - 80000
+	--[Freight]: Especie de impuesto, pero de donde se trae(???).Ponerlo aleatorio en el
+		--rango de 1 - 20000
+	--[TotalDue]: Es el resultado de Subtotal + TaxAmt + Freight.
+	--[rowguid]: NEWID()
+	--[ModifiedDate]: GETDATE()
 
+-- Sp creado para buscar(traer) los datos necesarios para realizar una insercion en la 
+-- tabla SalesOrderHeader.
 create or alter procedure sp_BuscSalesOrderHeader
 	@salesOrderID int, @bandera int, @customerId int, @BillToAddressID int, 
 		@TaxAmt money, @Freight money
@@ -102,7 +108,8 @@ go
 exec sp_BuscarSalesOrderHeader 75084, 1, 30006, 24019, 20, 40  
 go 
 
--- Insercion manual
+
+-- Prueba de una insercion manual
 INSERT INTO SERVIDOR2.SALES.sales.salesOrderHeader
 	(RevisionNumber, OrderDate, DueDate, ShipDate, [Status],
 	 OnlineOrderFlag, SalesOrderNumber, CustomerID, TerritoryID, 

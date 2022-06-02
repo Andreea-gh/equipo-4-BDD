@@ -2,6 +2,8 @@ use AdventureWorks2019
 go
 
 -- RECUPERAR
+-- sp diseñado para consultar los registros que contiene la tabla SalesOrderDetail el cual
+-- se encuentra en el otro servidor de sql server.
 create or alter procedure sp_RecuperarSalesOrderDetail
 as begin 
 	
@@ -23,29 +25,35 @@ exec sp_RecuperarSalesOrderDetail
 go
 
 -- INSERTAR
+-- Los siguientes comentarios se hicieron para identificar o razonar en que consisten los contenidos 
+-- (registros) de cada columna.
 
--- SalesOrderID: es el id de venta (uno por cada grupo de productos vendidos).
--- orderdetailID: es autoincrementable
--- carrierTrackin: a que se refiere?? Todo el grupo de una venta tiene el mismo.
--- orderQty: cuantos productos se piden ([produccion].[Product] ()), para ello se debe checar el stock
--- productID: debe existir.
--- specialofferid: representa el tipo de oferta. Todos los productos tienen oferta? la respuesta 
-	--es que no, los que tienen el 1 no tienen descuento. Pero hay unos que no estan en la tabla
-	-- pe product 1, 2, 3, 4 (que significa?).
--- unitprice: debe traerse de product (campo Listprice)
--- unitpricediscoutn: se trae de special offer
--- linetotal: resultado de qty*unitprice*(1-unitdiscount)
--- rowguid: Se trae de algun lado o solo son caracteres random(?)
+	-- SalesOrderID: es el id de venta (uno por cada grupo de productos vendidos).
+	-- orderdetailID: es autoincrementable
+	-- carrierTrackin: a que se refiere?? Todo el grupo de una venta tiene el mismo.
+	-- orderQty: cuantos productos se piden ([produccion].[Product] ()), para ello se debe checar el stock
+	-- productID: debe existir.
+	-- specialofferid: representa el tipo de oferta. Todos los productos tienen oferta? la respuesta 
+		--es que no, los que tienen el 1 no tienen descuento. Pero hay unos que no estan en la tabla
+		-- pe product 1, 2, 3, 4 (que significa?).
+	-- unitprice: debe traerse de product (campo Listprice)
+	-- unitpricediscoutn: se trae de special offer
+	-- linetotal: resultado de qty*unitprice*(1-unitdiscount)
+	-- rowguid: Se trae de algun lado o solo son caracteres random(?)
 
--- Otras tablas involucradas:
-	-- SpecialOfferProduct: Tipo de ofertas
-	-- SpecialOffer: Tipo de descuento con base al tipo de oferta.
-	-- Product: Informacion de los productos: costo del producto (StandardCost), saber si 
-		-- existe (mediante el id), saber si hay en existencia/stock (mediante campo 
-		-- SafetyStockLevel).
+-- En los siguentes comentarios se señalo cuales tablas tienen relacion con la tabla SalesOrderDetail,
+-- ya sea que de estas otras tablas se trajeron datos o que en estas tablas se propagaron (insertaron)
+-- los datos que se insertaron en el nuevo registro de la tabla SalesOrderDetail.
+
+	-- Otras tablas involucradas:
+		-- SpecialOfferProduct: Tipo de ofertas
+		-- SpecialOffer: Tipo de descuento con base al tipo de oferta.
+		-- Product: Informacion de los productos: costo del producto (StandardCost), saber si 
+			-- existe (mediante el id), saber si hay en existencia/stock (mediante campo 
+			-- SafetyStockLevel).
 
 
--- Para saber que existe el producto
+-- Pequeño script realizado para saber que existe el producto.
 DECLARE @productID int
 SELECT @productID = 5
 IF EXISTS (select * from production.Product where ProductID = @ProductID )
@@ -63,7 +71,7 @@ SELECT  @TSQL = 'select * from openquery(MYSQL,''select * from AdventureWorks201
 EXEC (@TSQL)
 go
 
--- Actualizar el stock
+-- Sp que Actualiza el stock.
 create or alter procedure sp_ActualizarProducto
 	@ProductID int, @nuevo_stock int
 as begin 
@@ -87,9 +95,10 @@ go
 exec sp_ActualizarProducto 1,10
 go
 
--- Validar existencia, cantidad stock.
+
+-- Sp que valida la existencia de un producto y cantidad stock.
 -- Tambien aqui mismo deberia validarse si tiene o no algun tipo de oferta (?).
--- Por alguna extraña razon los openquery en la app no jalan, pero aqui en sql server si. NO BORRAR.
+-- Por alguna extraña razon los openquery en la app no jalan, pero aqui en sql server si. NO BORRAR. ****
 create or alter procedure sp_ValidarInserccionSalesOrderDetail
 	@ProductID int, @solicitud_stock int
 as begin 
@@ -154,9 +163,9 @@ go
 
 
 
--- Insertar 
+-- sp que busca los datos necesarios para llevar a cabo una insercion en la tabla SalesOrderDetail. 
 -- porque no jala la insercion remota si, si jala fuera de el sp. 
--- Por alguna extraña razon los openquery en la app no jalan, pero aqui en sql server si. NO BORRAR.
+-- Por alguna extraña razon los openquery en la app no jalan, pero aqui en sql server si. NO BORRAR. ***
 create or alter procedure sp_BuscaSalesOrderDetail
 	@SalesOrderID int, @ProductID int, @cantidad smallint
 as begin 
@@ -178,7 +187,8 @@ as begin
 			Declare @tipo_oferta int, @precio money, @descuento smallmoney, @total numeric(38,6)
 			set @precio = ( select ListPrice from Production.Product
 							where ProductID = @ProductID )
-					
+				
+			-- si el producto tiene algun tipo de oferta ...
 			IF EXISTS (select * from  SERVIDOR2.SALES.[Sales].[SpecialOfferProduct] where ProductID = @ProductID )
 					BEGIN
 					-- insertarlo pero aplicando su respectivo descuento.
@@ -224,7 +234,7 @@ go
 
 exec sp_BuscaSalesOrderDetail 1920, 517, 10
 
--- insercion manual
+-- Una pequeña prueba de una insercion manual
 INSERT INTO SERVIDOR2.SALES.[Sales].[SalesOrderDetail] (SalesOrderID, [OrderQty], [ProductID],
 						[SpecialOfferID], [UnitPrice], UnitPriceDiscount, [LineTotal], rowguid, ModifiedDate)
 VALUES (1811, 1, 797, 1, 45, 0.00, 45, NEWID(), getdate());	
@@ -238,4 +248,5 @@ where SalesOrderID = 1740
 
 
 -- ELIMINACION
+-- Falata este pero ya no se solicito
 
