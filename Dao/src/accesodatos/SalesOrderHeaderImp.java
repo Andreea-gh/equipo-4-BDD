@@ -1,3 +1,4 @@
+//En esta clase se definen los metodos de su respectiva interface. 
 
 package accesodatos;
 
@@ -13,7 +14,7 @@ public class SalesOrderHeaderImp implements IAccesoDatosOrderHeader {
     ResultSet rs = null;
     ResultSetMetaData md = null;
     
-    
+    //Metodo que recupera todos los registros de su respectiva tabla.
     @Override
     public List<SalesOrderHeader> listar() {
         
@@ -67,11 +68,13 @@ public class SalesOrderHeaderImp implements IAccesoDatosOrderHeader {
         return lista;
     }
 
+    //Metodo que actualiza un registro de su respectiva tabla.
     @Override
     public void actualizar(SalesOrderHeader objeto) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    //Metodo que inserta un registro en su respectiva tabla.
     @Override
     public int insertar(SalesOrderHeader objeto) {
         
@@ -117,16 +120,19 @@ public class SalesOrderHeaderImp implements IAccesoDatosOrderHeader {
         return rows;
     }
 
+    //Metodo que elimina un registro en su respectiva tabla.
     @Override
     public void eliminar(int id) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    //Metodo que actualiza un registro de su respectiva tabla.
     @Override
     public void actualizar(Object objeto) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
+    //Metodo que busca los datos necesarios para llevar a cabo una insercion en la tabla.
     public SalesOrderHeader buscar(SalesOrderHeader salesOrderH){
         
         SalesOrderHeader salesOrderHnuevo = new SalesOrderHeader();

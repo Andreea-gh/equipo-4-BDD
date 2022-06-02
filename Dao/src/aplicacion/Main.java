@@ -1,3 +1,5 @@
+//Clase diseñada para presentar la aplicacion, en este caso la aplicacion
+//es por consola. 
 
 package aplicacion;
 
@@ -16,6 +18,7 @@ public class Main {
         int opcion = -1;
         ICrud crud = null;
         
+        //Menu para selaccionar sobre cual tabla se solicitara alguna operacion CRUD
         do{
             System.out.println("\n1. Sales Order Header.");
             System.out.println("2. Sales Order Detail.");
@@ -33,6 +36,10 @@ public class Main {
             }
             opcion=Integer.parseInt(opcionS);
             
+            //Dependientemente de la opcion que haya escogido el usuario, a la 
+            // interface que es padre de todos, se le asignara una clase que 
+            // haya implementado alguna de sus interfaces hijas o su interface 
+            // como tal.
             switch(opcion)
             {
                 case 1:
@@ -61,7 +68,8 @@ public class Main {
         }while(opcion!=0);
     }
     
-    
+    // Este menu contiene las 4 operaciones del CRUD y solo lo mandan a llamar
+    // las tablas que realizaran dichas operaciones.
     public static void menu( ICrud crud ){
         
         Scanner lect = new Scanner(System.in);
@@ -106,7 +114,8 @@ public class Main {
         }while(opcion!=0);
     }
     
-    
+    // Este menu contiene las 4 operaciones del CRUD y solo lo mandan a llamar
+    // las tablas que realizaran dichas operaciones.
     public static void menu2( ICrud crud ){
         
         Scanner lect = new Scanner(System.in);
@@ -144,7 +153,9 @@ public class Main {
     }
     
     
-    
+    // Metodo que aplica polimorfismo. Para que dependientemente del tipo de objeto
+    // que tenga almacenado la variable datos, se mande a llamar su respectivo metodo 
+    // de logica de insercion.
     public static void insertar(ICrud datos){
                 
         if(datos instanceof  SalesOrderDetailImp){
@@ -157,6 +168,9 @@ public class Main {
 	} 
     }
     
+    // Metodo que aplica polimorfismo. Para que dependientemente del tipo de objeto
+    // que tenga almacenado la variable datos, se mande a llamar su respectivo metodo 
+    // de recuperacion.
     public static void recuperar(ICrud datos){
         List lista=null; //pa todos.
         

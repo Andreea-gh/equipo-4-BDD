@@ -1,3 +1,4 @@
+//En esta clase se definen los metodos de su respectiva interface. 
 
 package accesodatos;
 
@@ -12,6 +13,7 @@ public class SalesOrderDetailImp implements ICrud4{
     PreparedStatement ps = null;
     ResultSet rs = null;
     
+    //Metodo que inserta un registro en su respectiva tabla.
     @Override
     public int insertar(Object objeto) {
         
@@ -48,11 +50,13 @@ public class SalesOrderDetailImp implements ICrud4{
         return rows;
     }
 
+    //Metodo que elimina un registro en su respectiva tabla.
     @Override
     public void eliminar(int id) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    //Metodo que recupera todos los registros de su respectiva tabla.
     @Override
     public List<SalesOrderDetail> listar() {
         
@@ -94,12 +98,14 @@ public class SalesOrderDetailImp implements ICrud4{
         return lista; 
     }
 
+    //Metodo que actualiza un registro de su respectiva tabla.
     @Override
     public void actualizar(Object objeto) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
-    
+    //Metodo que valida los datos de un registro antes de que se inserten. pe que el producto
+    //exista, que haya en stock.
     public int validar(SalesOrderDetail order){
         
         int resultado = -2;
@@ -126,7 +132,7 @@ public class SalesOrderDetailImp implements ICrud4{
         return resultado;
     }
     
-    
+    //Metodo que actualiza el stock de un solo producto. 
     public void actualizarProducto(int productId, int nuevoStock) {
         
         try {
@@ -146,7 +152,7 @@ public class SalesOrderDetailImp implements ICrud4{
         }
     }
     
-    
+    //Metodo que busca los datos necesarios para llevar a cabo una insercion en la tabla.
     public SalesOrderDetail buscar(SalesOrderDetail salesOrderD){
         
         SalesOrderDetail salesOrderDnuevo = new SalesOrderDetail();

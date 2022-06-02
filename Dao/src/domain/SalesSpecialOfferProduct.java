@@ -4,6 +4,7 @@ package domain;
 
 public class SalesSpecialOfferProduct {
     
+    //Atributos los cuales vienen siendo el nombre de las columas de su respectiva tabla.
     private int specialOfferId;
     private int productId;
     private String rowguid;

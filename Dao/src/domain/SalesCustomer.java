@@ -1,9 +1,10 @@
 
 package domain;
 
-import java.util.Date;
 
 public class SalesCustomer {
+    
+    //Atributos los cuales vienen siendo el nombre de las columas de su respectiva tabla.
     private int customerID;
     private int personID;
     private int storeID;

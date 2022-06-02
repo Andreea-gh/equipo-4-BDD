@@ -3,6 +3,8 @@ package domain;
 
 
 public class SalesOrderDetail {
+    
+    //Atributos los cuales vienen siendo el nombre de las columas de su respectiva tabla.
     private int salesOrderID;
     private int salesOrderDetailID;
     private String carrierTrackingNumber;
@@ -18,13 +20,16 @@ public class SalesOrderDetail {
     public SalesOrderDetail() {
     }
 
-    public SalesOrderDetail(int salesOrderID, int productID, int orderQty) { //constructor buscador
+    //Constructor buscador. Se creo este constructor ya que con estos atributos, son los unicos
+    // que se necesitan para buscar los demas datos para llevar a cabo una insercion en esta tabla.
+    public SalesOrderDetail(int salesOrderID, int productID, int orderQty) { 
         this.salesOrderID = salesOrderID;
         this.orderQty = orderQty;
         this.productID = productID;
     }
 
-    //Constructor insertor
+    //Constructor insertor. Este constructor contiene los datos necesarios para llevar a cabo una insercion
+    // en su respectiva tabla.
     public SalesOrderDetail(int salesOrderID, int orderQty, int productID, int specialOfferID, double unitPrice, double unitPriceDiscount, double lineTotal, String rowguid, String modifiedDate) {
         this.salesOrderID = salesOrderID;
         this.orderQty = orderQty;

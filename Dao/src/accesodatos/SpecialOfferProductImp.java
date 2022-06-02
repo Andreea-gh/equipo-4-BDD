@@ -1,3 +1,4 @@
+//En esta clase se definen los metodos de su respectiva interface. 
 
 package accesodatos;
 
@@ -15,6 +16,7 @@ public class SpecialOfferProductImp implements IAccesoDatosSpecialOfferProduct {
     ResultSet rs = null;
     ResultSetMetaData md = null;
 
+    //Metodo que recupera todos los registros de su respectiva tabla.
     @Override
     public List<SalesSpecialOfferProduct> listar() {
         System.out.println("Listar desde SqlServer");
@@ -45,6 +47,7 @@ public class SpecialOfferProductImp implements IAccesoDatosSpecialOfferProduct {
         return lista;
     }
 
+    //Metodo que actualiza todos los registros de su respectiva tabla.
     @Override
     public void actualizar(SalesSpecialOfferProduct objeto) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.

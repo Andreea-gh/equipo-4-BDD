@@ -1,3 +1,5 @@
+//Esta clase se creo para programar todas las reglas de negocio de cada proceso del
+//crud.
 
 package negocio;
 
@@ -14,6 +16,8 @@ public class LogicaOrderHeader {
         this.datos = new SalesOrderHeaderImp();
     }
     
+    //Realiza las reglas de negocio necesarias para llevar a cabo una insercion
+    // en su tabla.
     public void procesamientoInsercion(List<Integer> ordenes){
         
         if( ordenes.size() == 0)

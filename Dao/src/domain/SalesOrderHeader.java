@@ -4,6 +4,7 @@ package domain;
 
 public class SalesOrderHeader {
     
+    //Atributos los cuales vienen siendo el nombre de las columas de su respectiva tabla.
     private int salesOrderId;
     private int revisionNumber;
     private String orderDate;
@@ -39,7 +40,8 @@ public class SalesOrderHeader {
     public SalesOrderHeader() {
     }
 
-    //Constructor buscador
+    //Constructor buscador. Se creo este constructor ya que con estos atributos, son los unicos
+    // que se necesitan para buscar los demas datos para llevar a cabo una insercion en esta tabla.
     public SalesOrderHeader(int salesOrderId, int onlineOrderFlag, int customerId, int billToAdressId, double taxAmt, double freight) {
         this.salesOrderId = salesOrderId;
         this.onlineOrderFlag = onlineOrderFlag;
@@ -49,8 +51,6 @@ public class SalesOrderHeader {
         this.freight = freight;
     }
 
-    
-    
     
     public int getSalesOrderId() {
         return salesOrderId;

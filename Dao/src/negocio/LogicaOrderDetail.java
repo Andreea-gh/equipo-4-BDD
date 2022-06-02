@@ -1,3 +1,5 @@
+//Esta clase se creo para programar todas las reglas de negocio de cada proceso del
+//crud.
 
 package negocio;
 
@@ -14,6 +16,8 @@ public class LogicaOrderDetail {
         this.datos = new SalesOrderDetailImp();
     }
     
+    //Realiza las reglas de negocio necesarias para llevar a cabo una insercion
+    // en su tabla.
     public int procesamientoInsercion(){
         
         Scanner lect = new Scanner(System.in);

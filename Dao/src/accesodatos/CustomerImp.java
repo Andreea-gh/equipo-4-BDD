@@ -1,3 +1,5 @@
+//En esta clase se definen los metodos de su respectiva interface. 
+
 package accesodatos;
 
 import conexion.Conexion;
@@ -11,6 +13,7 @@ public class CustomerImp implements IAccesoDatosCustomer {
     ResultSet rs = null;
     ResultSetMetaData md = null;
 
+    //Metodo que recupera todos los registros de su respectiva tabla.
     @Override
     public List<SalesCustomer> listar() {
         System.out.println("Listar desde SqlServer");
@@ -44,6 +47,7 @@ public class CustomerImp implements IAccesoDatosCustomer {
         return lista;
     }
 
+    //Metodo que actualiza todos los registros de su respectiva tabla.
     @Override
     public void actualizar(SalesCustomer salCust) {
         System.out.println("\nActualizar desde SqlServer");
