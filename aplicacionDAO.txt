@@ -1,0 +1,17 @@
+Integrantes del equipo:
+	Caloch Campos Edgar
+	Granados Bello Martin Alejandro
+	Gómez García Carlos Eduardo
+	Gutiérrez Herrera Andrea 
+
+JAVA
+	Practica DAO\Dao
+
+SQL
+Proyecto solucion:
+ 	Practica DAO\Store Procedure\Sql\Multiservidor
+
+DB's
+	Servidor1: https://drive.google.com/file/d/12-gD2-dvmeXhj0WBM0NHPeJ3b_jZ1ccX/view?usp=sharing
+	Servidor2: https://drive.google.com/file/d/1kihbLCnh4p2TC3FItWZZ6yn2Y5t0FFCU/view?usp=sharing
+	Servidor3: https://drive.google.com/drive/folders/1-Xs8zvHtsJjKZCUEqHFGKolHm8P3UAR0?usp=sharing
