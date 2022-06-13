@@ -66,4 +66,30 @@ public class CustomerImp implements IAccesoDatosCustomer {
         }
     }
 
+    @Override
+    public List<SalesCustomer> listarNorthAmerica() {
+        List<SalesCustomer> lista = null;
+        SalesCustomer salCust = null;
+
+        try {
+            Conexion con = new Conexion();
+            ps = con.Conectar().prepareStatement("{call sp_listarClienteNorthAmerica}");
+
+            rs = ps.executeQuery();
+            lista = new ArrayList();
+            while (rs.next()) {
+                salCust = new SalesCustomer();
+                salCust.setCustomerID(rs.getInt(1));
+                salCust.setNumberOfOrders(rs.getInt(2));
+                lista.add(salCust);
+            }
+
+            rs.close();
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
+
+        return lista;
+    }
+
 }

@@ -12,6 +12,8 @@ public class SalesCustomer {
     private String accountNumber;
     private String rowguid;
     private String modifiedDate;
+    //Axuiliar para recuperar una columna del sp_listarClienteNorthAmerica
+    private int NumberOfOrders;
 
     public int getCustomerID() {
         return customerID;
@@ -72,6 +74,14 @@ public class SalesCustomer {
 
     public void setModifiedDate(String modifiedDate) {
         this.modifiedDate = modifiedDate;
+    }
+
+    public int getNumberOfOrders() {
+        return NumberOfOrders;
+    }
+
+    public void setNumberOfOrders(int NumberOfOrders) {
+        this.NumberOfOrders = NumberOfOrders;
     }
     
     

@@ -8,8 +8,12 @@ import java.util.List;
 
 public interface IAccesoDatosCustomer extends ICrud<SalesCustomer>{
     
+    @Override
     List<SalesCustomer>listar();
     
+    @Override
     void actualizar(SalesCustomer objeto);
     
+    //Lista el cliente con mas ordenes solicitades en Norte America
+    List<SalesCustomer>listarNorthAmerica();
 }
