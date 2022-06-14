@@ -81,3 +81,27 @@ go
 
 exec sp_listarClienteNorthAmerica
 go
+
+
+-- 8.  Listar los productos que no estén disponibles a la venta 
+SELECT * FROM Production.Product
+WHERE SellEndDate is not NULL
+
+
+go
+CREATE OR ALTER PROCEDURE sp_productosNoDisponibles
+as begin 
+	BEGIN TRY
+		BEGIN TRANSACTION
+	SELECT * FROM Production.Product
+	WHERE SellEndDate is not NULL
+		COMMIT TRANSACTION
+	END TRY 
+	BEGIN CATCH   
+		ROLLBACK TRANSACTION   
+		RAISERROR ('No se pudo realizar la accion',16,1)  
+	END CATCH
+end
+go
+
+exec sp_productosNoDisponibles
