@@ -5,11 +5,11 @@ Integrantes del equipo:
 	Gutiérrez Herrera Andrea 
 
 JAVA
-	Practica DAO\Dao
+	Proyecto DAO 2\Dao
 
 SQL
 Proyecto solucion:
- 	Practica DAO\Store Procedure\Sql\Multiservidor
+ 	Proyecto DAO 2\Store Procedure\Sql\Multiservidor
 
 DB's
 	Servidor1: https://drive.google.com/file/d/12-gD2-dvmeXhj0WBM0NHPeJ3b_jZ1ccX/view?usp=sharing
