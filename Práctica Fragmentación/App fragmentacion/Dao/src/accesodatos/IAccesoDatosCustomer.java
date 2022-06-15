@@ -19,4 +19,7 @@ public interface IAccesoDatosCustomer extends ICrud<SalesCustomer>{
 
     //Listar los clientes del territorio 1 y 4 que no tengan asociado un valor en personId
     List<SalesCustomer>listarClientesTerritorio();
+
+    //Listar  Listar el producto más solicitado en la región “Europe"
+    List<SalesCustomer>listarProductoEuropa();
 }

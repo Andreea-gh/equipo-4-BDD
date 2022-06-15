@@ -173,3 +173,42 @@ as
 	ELSE
 		SELECT 0 as resultado
 -- 9. Listar los clientes del territorio 1 y 4 que no tengan asociado un valor en personId
+SELECT CustomerID FROM Sales.Customer WHERE (TerritoryID = 1 or TerritoryID = 4) AND PersonID IS NULL
+
+go
+CREATE OR ALTER PROCEDURE sp_listarClientesTerritorio1a4
+as begin 
+	BEGIN TRY
+		BEGIN TRANSACTION
+	SELECT CustomerID FROM Sales.Customer WHERE (TerritoryID = 1 or TerritoryID = 4) AND PersonID IS NULL
+		COMMIT TRANSACTION
+	END TRY 
+	BEGIN CATCH   
+		ROLLBACK TRANSACTION   
+		RAISERROR ('No se pudo realizar la accion',16,1)  
+	END CATCH
+end
+go
+
+exec sp_listarClientesTerritorio1a4
+
+-- 4. Listar el producto más solicitado en la región “Europe”
+SELECT * FROM Sales.Customer C INNER JOIN Sales.SalesTerritory ST 
+ON C.TerritoryID = ST.TerritoryID WHERE [ST].[Group] = 'Europe';
+
+go
+CREATE OR ALTER PROCEDURE sp_productoMasSolicitadoEurope
+as begin 
+	BEGIN TRY
+		BEGIN TRANSACTION
+	SELECT * FROM OPENQUERY([192.168.56.1],'SELECT * FROM EuropePacific.Sales.Customer')
+		COMMIT TRANSACTION
+	END TRY 
+	BEGIN CATCH   
+		ROLLBACK TRANSACTION   
+		RAISERROR ('No se pudo realizar la accion',16,1)  
+	END CATCH
+end
+go
+
+exec sp_productoMasSolicitadoEurope

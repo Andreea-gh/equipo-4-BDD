@@ -40,7 +40,8 @@ public class app {
                     "7. Actualizar la subcategoría de los productos con productId del 1 al 4 a la subcategoría valida para el tipo de producto ");
             System.out
                     .println("8. Listar los clientes del territorio 1 y 4 que no tengan asociado un valor en personId");
-            System.out.println("9. Salir");
+            System.out.println("9. Listar el producto más solicitado en la región “Europe”");        
+            System.out.println("10. Salir");
             opc = entrada.nextInt();
             switch (opc) {
                 case 1:
@@ -170,8 +171,23 @@ public class app {
                         System.out.println(e);
                     }
                     break;
+                case 9:
+                    try{
+                        IAccesoDatosCustomer dao8 = new CustomerImp();
+                        for (SalesCustomer sc : dao8.listarProductoEuropa()){
+                            System.out.print(sc.getCustomerID() + "\t");
+                            System.out.print(sc.getPersonID() + "\t");
+                            System.out.print(sc.getStoreID() + "\t");
+                            System.out.print(sc.getTerritoryID() + "\t");
+                            System.out.print(sc.getAccountNumber() + "\t");
+                            System.out.print(sc.getRowguid() + "\t");
+                            System.out.println(sc.getModifiedDate() + "\t");
+                        }
+                    }catch (Exception e){
+                        System.out.println(e);
+                    }
             }
-        } while (opc != 9);
+        } while (opc != 10);
 
     }
 }
