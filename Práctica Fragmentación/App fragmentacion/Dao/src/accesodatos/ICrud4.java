@@ -5,6 +5,9 @@
 
 package accesodatos;
 
+import domain.SalesOrderDetail;
+import java.util.List;
+
 
 public interface ICrud4<T> extends ICrud{
     

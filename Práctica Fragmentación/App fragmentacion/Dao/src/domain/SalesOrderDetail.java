@@ -16,6 +16,8 @@ public class SalesOrderDetail {
     private double lineTotal;
     private String rowguid;
     private String modifiedDate;
+    // auxiliar para recupera la columna en el sp_productoMasSolicitadoEuropa
+    private int Cantidad_Productos;
 
     public SalesOrderDetail() {
     }
@@ -136,4 +138,14 @@ public class SalesOrderDetail {
     public String toString() {
         return "OrderDetail{" + "salesOrderID=" + salesOrderID + ", salesOrderDetailID=" + salesOrderDetailID + ", carrierTrackingNumber=" + carrierTrackingNumber + ", orderQty=" + orderQty + ", productID=" + productID + ", specialOfferID=" + specialOfferID + ", unitPrice=" + unitPrice + ", unitPriceDiscount=" + unitPriceDiscount + ", lineTotal=" + lineTotal + ", rowguid=" + rowguid + ", modifiedDate=" + modifiedDate + '}';
     }
+
+    public int getCantidad_Productos() {
+        return Cantidad_Productos;
+    }
+
+    public void setCantidad_Productos(int Cantidad_Productos) {
+        this.Cantidad_Productos = Cantidad_Productos;
+    }
+    
+    
 }

@@ -7,12 +7,15 @@ import java.util.Scanner;
 import accesodatos.IAccesoDatosCustomer;
 import accesodatos.IAccesoDatosOrderHeader;
 import accesodatos.IAccesoDatosProduct;
+import accesodatos.IAccesoDatosSalesOrderDetail;
 import accesodatos.IAccesoDatosSpecialOffer;
 import accesodatos.ProductionProductImp;
+import accesodatos.SalesOrderDetailImpl;
 import accesodatos.SalesOrderHeaderImp;
 import accesodatos.SalesSpecialOfferImp;
 import domain.ProductionProduct;
 import domain.SalesCustomer;
+import domain.SalesOrderDetail;
 import domain.SalesOrderHeader;
 import domain.SalesSpecialOffer;
 
@@ -28,10 +31,14 @@ public class app {
             System.out.println("Elige una opcion");
             System.out.println("1. Listar datos de empleado que vendio mas por region");
             System.out.println("2. Listar cuanto vendio un cierto empleado por region");
-            System.out.println("3. Listar los datos del cliente con más ordenes solicitadas en la región North America");
+            System.out
+                    .println("3. Listar los datos del cliente con más ordenes solicitadas en la región North America");
             System.out.println("4. Listar los productos que no estan disponibles a la venta");
             System.out.println("5. Listar las ofertas que tienen los productos de la categoría “Bikes”");
-            System.out.println("6. Salir");
+            System.out.println("6. Listar el producto más solicitado en la región “Europe” ");
+            System.out.println(
+                    "7. Actualizar la subcategoría de los productos con productId del 1 al 4 a la subcategoría valida para el tipo de producto ");
+            System.out.println("8. Salir");
             opc = entrada.nextInt();
             switch (opc) {
                 case 1:
@@ -83,8 +90,8 @@ public class app {
                     break;
                 case 4:
                     IAccesoDatosProduct dao = new ProductionProductImp();
-                    try{
-                        for(ProductionProduct p : dao.listar()){
+                    try {
+                        for (ProductionProduct p : dao.listar()) {
                             System.out.print(p.getProductID());
                             System.out.print("\t" + p.getName());
                             System.out.print("\t" + p.getProductNumber());
@@ -94,34 +101,63 @@ public class app {
                             System.out.print("\t" + p.getSafetyStockLevel());
                             System.out.println("\t" + p.getReorderPoint());
                         }
-                    }catch(Exception e){
+                    } catch (Exception e) {
                         System.out.println(e);
                     }
                     break;
                 case 5:
-                    
-                    try{
+
+                    try {
                         IAccesoDatosSpecialOffer dao4 = new SalesSpecialOfferImp();
-                        for(SalesSpecialOffer so : dao4.listar()){
-                            System.out.print(so.getSpecialOfferID() +"\t" + "\t");
+                        for (SalesSpecialOffer so : dao4.listar()) {
+                            System.out.print(so.getSpecialOfferID() + "\t" + "\t");
                             System.out.print(so.getDescription() + "\t" + "\t");
-                            System.out.print(so.getDiscountPct() + "\t" + "\t" );
+                            System.out.print(so.getDiscountPct() + "\t" + "\t");
                             System.out.print(so.getType() + "\t" + "\t");
-                            System.out.print(so.getCategory()+ "\t" + "\t");
-                            System.out.print(so.getStartDate()+ "\t" + "\t");
-                            System.out.print(so.getEndDate()+ "\t" + "\t");
-                            System.out.print(so.getMinQty()+ "\t" + "\t");
-                            System.out.print(so.getMaxQty()+ "\t" + "\t");
-                            System.out.print(so.getRowguid()+ "\t" + "\t");
+                            System.out.print(so.getCategory() + "\t" + "\t");
+                            System.out.print(so.getStartDate() + "\t" + "\t");
+                            System.out.print(so.getEndDate() + "\t" + "\t");
+                            System.out.print(so.getMinQty() + "\t" + "\t");
+                            System.out.print(so.getMaxQty() + "\t" + "\t");
+                            System.out.print(so.getRowguid() + "\t" + "\t");
                             System.out.println(so.getModifiedDate());
 
                         }
-                    }catch(Exception e){
+                    } catch (Exception e) {
+                        System.out.println(e);
+                    }
+                    break;
+                case 6:
+                    try {
+                        IAccesoDatosSalesOrderDetail dao5 = new SalesOrderDetailImpl();
+                        System.out.println("ProductID" + "\t" + "Cantidad_Productos");
+                        for (SalesOrderDetail sod : dao5.listar()) {
+                            System.out.print(sod.getProductID() + "\t" + "\t");
+                            System.out.println(sod.getCantidad_Productos());
+                        }
+                    } catch (Exception e) {
+                        System.out.println(e);
+                    }
+                    break;
+                case 7:
+                    try {
+                        IAccesoDatosProduct dao6 = new ProductionProductImp();
+                        ProductionProduct product = new ProductionProduct();
+
+                        System.out.println("Ingrese el ProductID: ");
+                        int ProductID = entrada.nextInt();
+                        System.out.println("Ingrese la subcategoria: ");
+                        int SubCategory = entrada.nextInt();
+                        product.setProductID(ProductID);
+                        product.setProductSubCategoryID(SubCategory);
+
+                        dao6.actualizar(product);
+                    } catch (Exception e) {
                         System.out.println(e);
                     }
                     break;
             }
-        } while (opc != 6);
+        } while (opc != 8);
 
     }
 }

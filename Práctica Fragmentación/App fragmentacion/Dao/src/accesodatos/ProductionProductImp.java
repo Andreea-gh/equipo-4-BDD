@@ -45,4 +45,24 @@ public class ProductionProductImp implements IAccesoDatosProduct {
         }
         return lista;
     }
+
+    @Override
+    public void actualizar(ProductionProduct objeto) {
+        ProductionProduct product = new ProductionProduct();
+        PreparedStatement ps = null;
+        try{
+            Conexion con = new Conexion();
+            ps = con.Conectar().prepareStatement("{call sp_ActualizarSubcategoria(?,?)}");
+
+            ps.setInt(1,objeto.getProductID());
+            ps.setInt(2, objeto.getProductSubCategoryID());
+
+            ps.executeUpdate();
+        }catch(Exception e){
+            System.out.println(e);
+        }finally{
+            Conexion.close(ps);
+        }
+        
+    }
 }
