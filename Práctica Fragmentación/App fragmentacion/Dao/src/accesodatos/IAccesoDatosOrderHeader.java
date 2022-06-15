@@ -16,5 +16,8 @@ public interface IAccesoDatosOrderHeader extends ICrud4<SalesOrderHeader>{
     
     // listar cuantas ordenes atendio un cierto empleado territorio espcificando el id
     List<SalesOrderHeader>ordenesPorTerritorio(SalesOrderHeader objeto);
+
+    //Listar los clientes del territorio 1 que tengan ordenes en otro territorio
+    List<SalesOrderHeader>clientesTerritorio1();
     
 }

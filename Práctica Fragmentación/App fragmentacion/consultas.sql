@@ -212,3 +212,27 @@ end
 go
 
 exec sp_productoMasSolicitadoEurope
+
+-- Listar los clientes del territorio 1 que tengan ordenes en otro territorio
+go
+CREATE OR ALTER PROCEDURE sp_clientesTerritorio1
+as begin 
+	BEGIN TRY
+		BEGIN TRANSACTION
+	SELECT * FROM OPENQUERY([192.168.56.1], 'select * from NorthAmerica.sales.SalesOrderHeader 
+	where TerritoryID = 1 and CustomerID in ( select CustomerID from NorthAmerica.sales.SalesOrderHeader 
+	where TerritoryID between 2 and 6 )
+	union all
+	select * from NorthAmerica.sales.SalesOrderHeader 
+	where TerritoryID = 1 and CustomerID in ( select CustomerID from EuropePacific.sales.SalesOrderHeader 
+	where TerritoryID between 7 and 10 )')
+		COMMIT TRANSACTION
+	END TRY 
+	BEGIN CATCH   
+		ROLLBACK TRANSACTION   
+		RAISERROR ('No se pudo realizar la accion',16,1)  
+	END CATCH
+end
+go
+
+exec sp_clientesTerritorio1

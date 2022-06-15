@@ -40,8 +40,9 @@ public class app {
                     "7. Actualizar la subcategoría de los productos con productId del 1 al 4 a la subcategoría valida para el tipo de producto ");
             System.out
                     .println("8. Listar los clientes del territorio 1 y 4 que no tengan asociado un valor en personId");
-            System.out.println("9. Listar el producto más solicitado en la región “Europe”");        
-            System.out.println("10. Salir");
+            System.out.println("9. Listar el producto más solicitado en la región “Europe”");
+            System.out.println("10. Listar los clientes del territorio 1 que tengan ordenes en otro territorio");        
+            System.out.println("11. Salir");
             opc = entrada.nextInt();
             switch (opc) {
                 case 1:
@@ -186,8 +187,18 @@ public class app {
                     }catch (Exception e){
                         System.out.println(e);
                     }
+                    break;
+                    case 10:
+                    try{
+                        IAccesoDatosOrderHeader dao9 = new SalesOrderHeaderImp();
+                        for(SalesOrderHeader soh : dao9.clientesTerritorio1()){
+                            System.out.println(soh.getSalesOrderId());
+                        }
+                    }catch(Exception e){
+                        System.out.println(e);
+                    }
             }
-        } while (opc != 10);
+        } while (opc != 11);
 
     }
 }
