@@ -38,7 +38,9 @@ public class app {
             System.out.println("6. Listar el producto más solicitado en la región “Europe” ");
             System.out.println(
                     "7. Actualizar la subcategoría de los productos con productId del 1 al 4 a la subcategoría valida para el tipo de producto ");
-            System.out.println("8. Salir");
+            System.out
+                    .println("8. Listar los clientes del territorio 1 y 4 que no tengan asociado un valor en personId");
+            System.out.println("9. Salir");
             opc = entrada.nextInt();
             switch (opc) {
                 case 1:
@@ -156,8 +158,20 @@ public class app {
                         System.out.println(e);
                     }
                     break;
+                case 8:
+                    try {
+                        IAccesoDatosCustomer dao7 = new CustomerImp();
+                        System.out.println("CustomerID");
+                        for (SalesCustomer sc : dao7.listarClientesTerritorio()) {
+                            System.out.println(sc.getCustomerID());
+                        }
+
+                    } catch (Exception e) {
+                        System.out.println(e);
+                    }
+                    break;
             }
-        } while (opc != 8);
+        } while (opc != 9);
 
     }
 }

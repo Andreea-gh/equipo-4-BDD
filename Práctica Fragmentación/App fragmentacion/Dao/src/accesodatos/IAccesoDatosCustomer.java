@@ -16,4 +16,7 @@ public interface IAccesoDatosCustomer extends ICrud<SalesCustomer>{
     
     //Lista el cliente con mas ordenes solicitades en Norte America
     List<SalesCustomer>listarNorthAmerica();
+
+    //Listar los clientes del territorio 1 y 4 que no tengan asociado un valor en personId
+    List<SalesCustomer>listarClientesTerritorio();
 }
