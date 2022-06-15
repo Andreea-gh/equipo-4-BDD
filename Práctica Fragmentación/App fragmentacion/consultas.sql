@@ -105,3 +105,33 @@ end
 go
 
 exec sp_productosNoDisponibles
+
+-- 5. Listar las ofertas que tienen los productos de la categoría “Bikes”
+go
+CREATE OR ALTER PROCEDURE sp_ofertasProductoBikes
+as begin 
+	BEGIN TRY
+		BEGIN TRANSACTION
+	SELECT * FROM Sales.SpecialOffer WHERE SpecialOfferID IN (
+	SELECT SpecialOfferID FROM Sales.SpecialOfferProduct SOP 
+	INNER JOIN Production.Product P ON SOP.ProductID = P.ProductID
+	INNER JOIN Production.ProductSubcategory PS ON P.ProductSubcategoryID = PS.ProductSubcategoryID
+	INNER JOIN Production.ProductCategory PC ON PS.ProductCategoryID = PC.ProductCategoryID WHERE
+	[PC].[Name] = 'Bikes');
+		COMMIT TRANSACTION
+	END TRY 
+	BEGIN CATCH   
+		ROLLBACK TRANSACTION   
+		RAISERROR ('No se pudo realizar la accion',16,1)  
+	END CATCH
+end
+go
+
+exec sp_ofertasProductoBikes
+
+SELECT * FROM Sales.SpecialOffer WHERE SpecialOfferID IN (
+SELECT SpecialOfferID FROM Sales.SpecialOfferProduct SOP 
+INNER JOIN Production.Product P ON SOP.ProductID = P.ProductID
+INNER JOIN Production.ProductSubcategory PS ON P.ProductSubcategoryID = PS.ProductSubcategoryID
+INNER JOIN Production.ProductCategory PC ON PS.ProductCategoryID = PC.ProductCategoryID WHERE
+[PC].[Name] = 'Bikes');

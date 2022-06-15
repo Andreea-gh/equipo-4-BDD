@@ -7,11 +7,14 @@ import java.util.Scanner;
 import accesodatos.IAccesoDatosCustomer;
 import accesodatos.IAccesoDatosOrderHeader;
 import accesodatos.IAccesoDatosProduct;
+import accesodatos.IAccesoDatosSpecialOffer;
 import accesodatos.ProductionProductImp;
 import accesodatos.SalesOrderHeaderImp;
+import accesodatos.SalesSpecialOfferImp;
 import domain.ProductionProduct;
 import domain.SalesCustomer;
 import domain.SalesOrderHeader;
+import domain.SalesSpecialOffer;
 
 public class app {
     public static void main(String[] args) {
@@ -25,10 +28,10 @@ public class app {
             System.out.println("Elige una opcion");
             System.out.println("1. Listar datos de empleado que vendio mas por region");
             System.out.println("2. Listar cuanto vendio un cierto empleado por region");
-            System.out
-                    .println("3. Listar los datos del cliente con más ordenes solicitadas en la región North America");
+            System.out.println("3. Listar los datos del cliente con más ordenes solicitadas en la región North America");
             System.out.println("4. Listar los productos que no estan disponibles a la venta");
-            System.out.println("5. Salir");
+            System.out.println("5. Listar las ofertas que tienen los productos de la categoría “Bikes”");
+            System.out.println("6. Salir");
             opc = entrada.nextInt();
             switch (opc) {
                 case 1:
@@ -83,20 +86,42 @@ public class app {
                     try{
                         for(ProductionProduct p : dao.listar()){
                             System.out.print(p.getProductID());
-                            System.out.print("\t" + "\t" + p.getName());
-                            System.out.print("\t" + "\t" + p.getProductNumber());
-                            System.out.print("\t" + "\t" + p.getMakeFlag());
-                            System.out.print("\t" + "\t" + p.getFinishedGoodsFlag());
-                            System.out.print("\t" + "\t" + p.getColor());
-                            System.out.print("\t" + "\t" + p.getSafetyStockLevel());
-                            System.out.println("\t" + "\t" + p.getReorderPoint());
+                            System.out.print("\t" + p.getName());
+                            System.out.print("\t" + p.getProductNumber());
+                            System.out.print("\t" + p.getMakeFlag());
+                            System.out.print("\t" + p.getFinishedGoodsFlag());
+                            System.out.print("\t" + p.getColor());
+                            System.out.print("\t" + p.getSafetyStockLevel());
+                            System.out.println("\t" + p.getReorderPoint());
+                        }
+                    }catch(Exception e){
+                        System.out.println(e);
+                    }
+                    break;
+                case 5:
+                    
+                    try{
+                        IAccesoDatosSpecialOffer dao4 = new SalesSpecialOfferImp();
+                        for(SalesSpecialOffer so : dao4.listar()){
+                            System.out.print(so.getSpecialOfferID() +"\t" + "\t");
+                            System.out.print(so.getDescription() + "\t" + "\t");
+                            System.out.print(so.getDiscountPct() + "\t" + "\t" );
+                            System.out.print(so.getType() + "\t" + "\t");
+                            System.out.print(so.getCategory()+ "\t" + "\t");
+                            System.out.print(so.getStartDate()+ "\t" + "\t");
+                            System.out.print(so.getEndDate()+ "\t" + "\t");
+                            System.out.print(so.getMinQty()+ "\t" + "\t");
+                            System.out.print(so.getMaxQty()+ "\t" + "\t");
+                            System.out.print(so.getRowguid()+ "\t" + "\t");
+                            System.out.println(so.getModifiedDate());
+
                         }
                     }catch(Exception e){
                         System.out.println(e);
                     }
                     break;
             }
-        } while (opc != 5);
+        } while (opc != 6);
 
     }
 }
