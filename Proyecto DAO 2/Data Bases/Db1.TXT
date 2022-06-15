@@ -1,0 +1,1 @@
+Era la db AdventureWorks2019 pero sin el esquema sales.
