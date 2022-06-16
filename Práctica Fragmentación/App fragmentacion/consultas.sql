@@ -54,7 +54,7 @@ go
 
 
 -- Listar los datos del cliente con más ordenes solicitadas en la región "North America"
-SELECT * FROM OPENQUERY ([192.168.56.1],'SELECT TOP 1 NorthAmerica.Sales.Customer.CustomerID, COUNT(NorthAmerica.sales.SalesOrderHeader.SalesOrderID) AS NumberOfOrders
+SELECT * FROM OPENQUERY (SERVIDOR3,'SELECT TOP 1 NorthAmerica.Sales.Customer.CustomerID, COUNT(NorthAmerica.sales.SalesOrderHeader.SalesOrderID) AS NumberOfOrders
 FROM NorthAmerica.Sales.SalesOrderHeader INNER JOIN NorthAmerica.Sales.Customer 
 ON NorthAmerica.Sales.SalesOrderHeader.CustomerID = NorthAmerica.Sales.Customer.CustomerID 
 WHERE NorthAmerica.Sales.SalesOrderHeader.TerritoryID IN (1,2,3,4,5,6)
@@ -65,7 +65,7 @@ CREATE OR ALTER PROCEDURE sp_listarClienteNorthAmerica
 as begin 
 	BEGIN TRY
 		BEGIN TRANSACTION
-	SELECT * FROM OPENQUERY ([192.168.56.1],'SELECT TOP 1 NorthAmerica.Sales.Customer.CustomerID, COUNT(NorthAmerica.sales.SalesOrderHeader.SalesOrderID) AS NumberOfOrders
+	SELECT * FROM OPENQUERY (SERVIDOR3,'SELECT TOP 1 NorthAmerica.Sales.Customer.CustomerID, COUNT(NorthAmerica.sales.SalesOrderHeader.SalesOrderID) AS NumberOfOrders
 	FROM NorthAmerica.Sales.SalesOrderHeader INNER JOIN NorthAmerica.Sales.Customer 
 	ON NorthAmerica.Sales.SalesOrderHeader.CustomerID = NorthAmerica.Sales.Customer.CustomerID 
 	WHERE NorthAmerica.Sales.SalesOrderHeader.TerritoryID IN (1,2,3,4,5,6)
@@ -140,7 +140,7 @@ CREATE OR ALTER PROCEDURE sp_productoMasSolicitadoEuropa
 as begin 
 	BEGIN TRY
 		BEGIN TRANSACTION
-		SELECT * FROM OPENQUERY ([192.168.56.1], 'select top 3 so.ProductID, COUNT(*) as Cantidad_Productos
+		SELECT * FROM OPENQUERY (SERVIDOR3, 'select top 3 so.ProductID, COUNT(*) as Cantidad_Productos
 		from EuropePacific.sales.SalesOrderDetail so
 		inner join EuropePacific.sales.SalesOrderHeader sh
 		on sh.SalesOrderID = so.SalesOrderID 
@@ -201,7 +201,7 @@ CREATE OR ALTER PROCEDURE sp_productoMasSolicitadoEurope
 as begin 
 	BEGIN TRY
 		BEGIN TRANSACTION
-	SELECT * FROM OPENQUERY([192.168.56.1],'SELECT * FROM EuropePacific.Sales.Customer')
+	SELECT * FROM OPENQUERY(SERVIDOR3,'SELECT * FROM EuropePacific.Sales.Customer')
 		COMMIT TRANSACTION
 	END TRY 
 	BEGIN CATCH   
@@ -219,7 +219,7 @@ CREATE OR ALTER PROCEDURE sp_clientesTerritorio1
 as begin 
 	BEGIN TRY
 		BEGIN TRANSACTION
-	SELECT * FROM OPENQUERY([192.168.56.1], 'select * from NorthAmerica.sales.SalesOrderHeader 
+	SELECT * FROM OPENQUERY(SERVIDOR3, 'select * from NorthAmerica.sales.SalesOrderHeader 
 	where TerritoryID = 1 and CustomerID in ( select CustomerID from NorthAmerica.sales.SalesOrderHeader 
 	where TerritoryID between 2 and 6 )
 	union all

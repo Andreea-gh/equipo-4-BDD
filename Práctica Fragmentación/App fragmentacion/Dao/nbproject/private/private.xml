@@ -3,19 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Carlos/Desktop/BasesDeDatosDis/Práctica%20Fragmentación/App%20fragmentacion/Dao/src/domain/SalesSpecialOffer.java</file>
-            <file>file:/C:/Users/Carlos/Desktop/BasesDeDatosDis/Práctica%20Fragmentación/App%20fragmentacion/Dao/src/accesodatos/IAccesoDatosSpecialOffer.java</file>
-            <file>file:/C:/Users/Carlos/Desktop/BasesDeDatosDis/Práctica%20Fragmentación/App%20fragmentacion/Dao/src/accesodatos/IAccesoDatosProduct.java</file>
-            <file>file:/C:/Users/Carlos/Desktop/BasesDeDatosDis/Práctica%20Fragmentación/App%20fragmentacion/Dao/src/accesodatos/IAccesoDatosOrderHeader.java</file>
-            <file>file:/C:/Users/Carlos/Desktop/BasesDeDatosDis/Práctica%20Fragmentación/App%20fragmentacion/Dao/src/accesodatos/IAccesoDatosCustomer.java</file>
-            <file>file:/C:/Users/Carlos/Desktop/BasesDeDatosDis/Práctica%20Fragmentación/App%20fragmentacion/Dao/src/accesodatos/ICrud4.java</file>
-            <file>file:/C:/Users/Carlos/Desktop/BasesDeDatosDis/Práctica%20Fragmentación/App%20fragmentacion/Dao/src/domain/SalesCustomer.java</file>
-            <file>file:/C:/Users/Carlos/Desktop/BasesDeDatosDis/Práctica%20Fragmentación/App%20fragmentacion/Dao/src/accesodatos/SalesSpecialOfferImp.java</file>
             <file>file:/C:/Users/Carlos/Desktop/BasesDeDatosDis/Práctica%20Fragmentación/App%20fragmentacion/Dao/src/accesodatos/SalesOrderHeaderImp.java</file>
-            <file>file:/C:/Users/Carlos/Desktop/BasesDeDatosDis/Práctica%20Fragmentación/App%20fragmentacion/Dao/src/accesodatos/CustomerImp.java</file>
             <file>file:/C:/Users/Carlos/Desktop/BasesDeDatosDis/Práctica%20Fragmentación/App%20fragmentacion/Dao/src/domain/ProductionProduct.java</file>
-            <file>file:/C:/Users/Carlos/Desktop/BasesDeDatosDis/Práctica%20Fragmentación/App%20fragmentacion/Dao/src/aplicacion/app.java</file>
             <file>file:/C:/Users/Carlos/Desktop/BasesDeDatosDis/Práctica%20Fragmentación/App%20fragmentacion/Dao/src/accesodatos/ProductionProductImp.java</file>
+            <file>file:/C:/Users/Carlos/Desktop/BasesDeDatosDis/Práctica%20Fragmentación/App%20fragmentacion/Dao/src/conexion/Conexion.java</file>
+            <file>file:/C:/Users/Carlos/Desktop/BasesDeDatosDis/Práctica%20Fragmentación/App%20fragmentacion/Dao/src/accesodatos/IAccesoDatosCustomer.java</file>
+            <file>file:/C:/Users/Carlos/Desktop/BasesDeDatosDis/Práctica%20Fragmentación/App%20fragmentacion/Dao/src/aplicacion/app.java</file>
         </group>
     </open-files>
 </project-private>
