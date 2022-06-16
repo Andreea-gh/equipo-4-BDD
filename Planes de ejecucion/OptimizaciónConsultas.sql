@@ -96,6 +96,7 @@ order by ENTIDAD_UM
 -- Solucion 2
 -- Como muy probablemente la entidad residencial sea la mas importante, es que en esta otra solucion unicamnte se selecciona
 -- este campo y se contabiliza cuantos casos sospeshocos hay por cada entidad residencial.
+CREATE CLUSTERED INDEX IX_ENTIDAD_RES ON dbo.copiadatoscovid(ENTIDAD_RES)
 select ENTIDAD_RES, count(*) total_sospechosos
 from dbo.copiadatoscovid
 where CLASIFICACION_FINAL = 6
@@ -144,6 +145,7 @@ order by ENTIDAD_RES, reportados desc
 
 -- solución 2
 -- Esta solucion se realizo con ideas totalmente iguales a las anteriores pero utilizando inner join.
+CREATE NONCLUSTERED INDEX IX_CLASIFICACION_FINAL on dbo.copiadatoscovid(CLASIFICACION_FINAL)
 select cc.ENTIDAD_RES, cc.MUNICIPIO_RES, cc.confirmado, cs.sospechoso
 from (select ENTIDAD_RES, MUNICIPIO_RES, count(*) as sospechoso 
       from dbo.copiadatoscovid where CLASIFICACION_FINAL = 6
@@ -180,6 +182,7 @@ order by cc.ENTIDAD_RES, cc.MUNICIPIO_RES
 -- De este resultado se selecciona la cantidad mayor.
 -- Finalmente se vuelve a contabilizar cuantos muertos hay en casos positivos al covid por cada municipio residencial pero 
 -- condicionando que solo se traiga la mayor cantidad.
+CREATE CLUSTERED INDEX IX_MUNICIPIO_RES on dbo.copiadatoscovid(MUNICIPIO_RES)
 select MUNICIPIO_RES, COUNT(*) as numero_Defunciones
 from dbo.copiadatoscovid
 where CLASIFICACION_FINAL between 1 and 3 and FECHA_DEF != '9999-99-99'
@@ -213,6 +216,7 @@ having COUNT(*) = ( select max(numero_Defunciones)
 -- Una paciente se considera con neumonia si tiene el valor 1 en ese campo.
 -- Como no se entiende bien sobre cual entidad se refiere el enunciado, se seleccionan las entidades mas importantes, 
 -- siendo la entidad de unidad medica y entidad residencial. De ahi se contabiliza cuantos registros hay por cada entidad.
+CREATE CLUSTERED INDEX IX_ENTIDAD_UM on dbo.copiadatoscovid(ENTIDAD_UM)
 select ENTIDAD_UM, ENTIDAD_RES, count(*)
 from dbo.copiadatoscovid
 where CLASIFICACION_FINAL = 6 and FECHA_DEF != '9999-99-99' and NEUMONIA = 1
@@ -226,6 +230,7 @@ group by ENTIDAD_UM, ENTIDAD_RES
 -- Solucion 2
 -- Como muy probablemente la entidad residencial sea la mas importante, es que en esta otra solucion unicamnte se selecciona
 -- este campo cuantos registros hay por cada entidad residencial.
+CREATE CLUSTERED INDEX IX_ENTIDAD_RES on dbo.copiadatoscovid(ENTIDAD_RES)
 select ENTIDAD_RES, count(*)
 from dbo.copiadatoscovid
 where CLASIFICACION_FINAL = 6 and FECHA_DEF != '9999-99-99' and NEUMONIA = 1
@@ -249,6 +254,7 @@ group by ENTIDAD_RES
 -- este campo se encuentra el valor de 9999-99-99, entonces cuando un paciente muere tiene un valor distinto a 9999-99-99.
 -- Se buscan estas condiciones pero en las fechas indicadas.
 -- Finalmente se selecciona cada entidad residencial para mostrar el resultado.
+CREATE CLUSTERED INDEX IX_ENTIDAD_RES on dbo.copiadatoscovid(ENTIDAD_RES)
 Select ENTIDAD_RES, count(case CLASIFICACION_FINAL when 6 then CLASIFICACION_FINAL end) as sospechoso, 
 	count(*) as reportados, count(case CLASIFICACION_FINAL when 1 then CLASIFICACION_FINAL 
                                                            when 2 then CLASIFICACION_FINAL
@@ -284,6 +290,7 @@ order by ENTIDAD_RES
 -- anteriormente mencionadas.
 -- Se ordenaron de mayor a menor el numero de casos confirmados por municipio residencial.
 -- Finalmente se selecciono mostrar los primeros 5 registros.
+CREATE CLUSTERED INDEX IX_MUNICIPIO_RES on dbo.copiadatoscovid(MUNICIPIO_RES)
 Select top 5 MUNICIPIO_RES, count(case CLASIFICACION_FINAL when 1 then CLASIFICACION_FINAL 
                                                      when 2 then CLASIFICACION_FINAL
 						      						 when 3 then CLASIFICACION_FINAL
@@ -322,6 +329,7 @@ order by confirmado desc
 -- este campo se encuentra el valor de 9999-99-99, entonces cuando un paciente muere tiene un valor distinto a 9999-99-99.
 -- Se busco el numero de defunciones en el año 2020, despues en el año 2021 y finalmente en el año 2022 y se comparo si 2020 tiene
 -- una cantidad mayor o ya sea el año 2021 o 2022.
+CREATE NONCLUSTERED INDEX IX_FECHA_DEF on dbo.copiadatoscovid(FECHA_DEF)
 Declare @cant2020 int, @cant2021 int, @cant2022 int
 set @cant2020 = ( Select COUNT( case when  FECHA_DEF like '2020-%' then FECHA_DEF end ) as total_Defunciones  
 				  from dbo.copiadatoscovid
@@ -359,6 +367,7 @@ ELSE
 -- Se utilizo ideas totalmente iguales sin embargo, no se utilizo un print que indicara el resultado a estas consultas, si no 
 -- se agruparon estos datos en una sola tabla con union all, para que un usuario pueda visualizar cuantas defunciones hubo por 
 -- año y sea este mismo quien determine la respuesta a la pregunta.
+CREATE CLUSTERED INDEX IX_FECHA_DEF on dbo.copiadatoscovid(FECHA_DEF)
 Select 2020 as Año, COUNT( case when  FECHA_DEF like '2020-%' then FECHA_DEF end ) as total_Defunciones  
 from dbo.copiadatoscovid
 where EDAD < 18 
@@ -391,6 +400,7 @@ where EDAD < 18
 -- Se considera casos reportado si se encuentra en la tabla.
 -- Se realiza dos consultas en los años especificados con las condiciones previamente mencionadas.
 -- Se imprime el resultado.
+CREATE CLUSTERED INDEX IX_CLASIFICACION_FINAL on dbo.copiadatoscovid(CLASIFICACION_FINAL)
 Declare @porcentaje2021 int, @porcentaje2020 int
 set @porcentaje2021 = (	select aux.Confirmados_Laboratorio*100/aux.Reportados as Confirmados_Laboratorio
 						from (
